@@ -6,8 +6,13 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      name: 'home',
+      name: 'locations',
       component: HomeView
+    },
+    {
+      path: '/loc/:locId',
+      name: 'location-details',
+      component: () => import('@/views/LocDetails.vue')
     },
     {
       path: '/about',

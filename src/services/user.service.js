@@ -1,11 +1,11 @@
 import { storageService } from './async-storage.service.js'
 import { httpService } from './http.service.js'
 import { utilService } from './util.service.js'
-import axios from 'axios'
+// import axios from 'axios'
 // import { store } from '../store/store'
 // import { socketService, SOCKET_EVENT_USER_UPDATED, SOCKET_EMIT_USER_WATCH } from './socket.service'
 // import { showSuccessMsg } from './event-bus.service'
-import user from './../../data/user.json' assert {type: 'json'}
+// import user from './../../data/user.json' assert {type: 'json'}
 
 const STORAGE_KEY_LOGGEDIN_USER = 'loggedinUser'
 const USER_DB = 'user'
@@ -125,8 +125,15 @@ function getEmptyUser() {
 }
 
 // ; (async () => {
-//     utilService.saveToStorage(USER_DB, user)
-//     login(user[0])
+//     utilService.saveToStorage(USER_DB, {
+//         _id: "u102",
+//         fullname: "Al Tamit",
+//         username: "al.amit",
+//         email: "al.tmit@gmail.com",
+//         password: "1234",
+//         imgUrl: "https://res.cloudinary.com/tal-amit-dev/image/upload/v1679773600/Instagram/WhatsApp_Image_2023-03-25_at_22.42.55_gh0eyd.jpg"
+//     })
+// login(user[0])
 // })()
 
 
