@@ -1,42 +1,49 @@
 
 <template>
- <div class="loc-preview">
+ <section @click="navigateTo(props.loc._id)" class="loc-preview">
   <h2>{{ props.loc.name }}</h2>
-  <p>{{ props.loc.description }}</p>
   <img :src="props.loc.imgUrl" alt="Location Image" />
- </div>
+  <ul class="label-list">
+   <li v-for="label, idx in props.loc.labels" :key="idx">{{ label }}</li>
+  </ul>
+ </section>
 </template>
 
 <script setup>
 import { defineProps } from "vue";
+import { useRouter } from 'vue-router'
+
 const props = defineProps({
  loc: {
   type: Object,
 
  },
 });
+
+
+const router = useRouter()
+function navigateTo(locId) {
+ router.push(`/loc/${locId}`)
+}
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
 .loc-preview {
- border: 1px solid #ccc;
+ box-shadow: 0 0 2px 0px #c9c9c9;
  padding: 10px;
  margin-bottom: 10px;
-}
+ text-decoration: none;
 
-.loc-preview h2 {
- font-size: 18px;
- margin-bottom: 5px;
-}
 
-.loc-preview p {
- font-size: 14px;
- margin-bottom: 10px;
-}
+ h2 {
+  font-size: 18px;
+  margin-bottom: 5px;
+ }
 
-.loc-preview img {
- width: 100%;
- max-height: 200px;
- object-fit: cover;
+ img {
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+ }
 }
 </style>

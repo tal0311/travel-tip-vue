@@ -22,7 +22,8 @@ async function getLocs() {
 }
 
 async function addLoc(loc) {
-    return await storageService.post(LOCS_KEY, loc)
+    if(loc._id) return await storageService.put(LOCS_KEY, loc)
+    else return await storageService.post(LOCS_KEY, loc)
 }
 
 async function removeLoc(locId) {
@@ -55,8 +56,30 @@ function createLocations() {
     let locations = utilService.loadFromStorage(LOCS_KEY)
     if (!locations || !locations.length) {
         locations = [
-            { name: 'Greatplace', lat: 32.047104, lng: 34.832384, photo: null, note: 'demo data for note', createdAt: Date.now(), updatedAt: null, imgUrl: 'https://source.unsplash.com/random/400x400?river' },
-            { name: 'Neveragain', lat: 32.047201, lng: 34.832581, photo: null, note: 'demo data for note', createdAt: Date.now(), updatedAt: null ,imgUrl: 'https://source.unsplash.com/random/400x400?forest' }
+        { 
+            _id: utilService.makeId(),
+            name: 'Greatplace', 
+            lat: 32.047104, 
+            lng: 34.832384,
+            photo: null,
+            note: 'demo data for note',
+            createdAt: Date.now(),
+            updatedAt: null,
+            imgUrl: 'https://source.unsplash.com/random/400x400?river',
+            labels:['camping','hiking']
+        },
+        {
+            _id: utilService.makeId(),
+            name: 'Neveragain', 
+            lat: 32.047201, 
+            lng: 34.832581, 
+            photo: null, 
+            note: 'demo data for note',
+             createdAt: Date.now(), 
+             updatedAt: null ,
+             imgUrl: 'https://source.unsplash.com/random/400x400?forest',
+             labels:['city','street']
+        }
         ]
         utilService.saveToStorage(LOCS_KEY, locations)
     }

@@ -1,7 +1,6 @@
 <template>
  <section class="loc-list" v-if="props.locs">
-  <h2>loc list</h2>
-  <pre>{{ locs }}</pre>
+  <h2>You'r locations</h2>
   <LocPreview v-for="loc in locs" :key="loc._id" :loc="loc" />
  </section>
 </template>

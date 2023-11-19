@@ -2,7 +2,7 @@
 <template>
   <header>
 
-    <nav>
+    <nav class="home-nav">
       <RouterLink to="/">Home</RouterLink>
       <RouterLink to="/about">About</RouterLink>
       <RouterLink to="/loc/123">Location details</RouterLink>
@@ -38,13 +38,13 @@ nav {
   margin-top: 2rem;
 }
 
-nav a.router-link-exact-active {
+/* nav.home-nav a.router-link-exact-active {
   color: var(--color-text);
-}
+} */
 
-nav a.router-link-exact-active:hover {
+/* nav a.router-link-exact-active:hover {
   background-color: transparent;
-}
+} */
 
 nav a {
   display: inline-block;
