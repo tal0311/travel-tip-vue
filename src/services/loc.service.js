@@ -17,12 +17,21 @@ createLocations()
 
 
 
-async function getLocs() {
-    return await storageService.query(LOCS_KEY)
+async function getLocs(filterBy) {
+    console.log('filter', filterBy);
+    let locs = await storageService.query(LOCS_KEY)
+    if (filterBy.txt) {
+        const regex = new RegExp(filterBy.txt, 'i')
+        locs = locs.filter(loc => regex.test(loc.name))
+    }
+    if (filterBy.type && filterBy.type.length) {
+        locs = locs.filter(loc => loc.labels.some(label => filterBy.type.includes(label)))
+    }
+    return locs
 }
 
 async function addLoc(loc) {
-    if(loc._id) return await storageService.put(LOCS_KEY, loc)
+    if (loc._id) return await storageService.put(LOCS_KEY, loc)
     else return await storageService.post(LOCS_KEY, loc)
 }
 
@@ -56,30 +65,30 @@ function createLocations() {
     let locations = utilService.loadFromStorage(LOCS_KEY)
     if (!locations || !locations.length) {
         locations = [
-        { 
-            _id: utilService.makeId(),
-            name: 'Greatplace', 
-            lat: 32.047104, 
-            lng: 34.832384,
-            photo: null,
-            note: 'demo data for note',
-            createdAt: Date.now(),
-            updatedAt: null,
-            imgUrl: 'https://source.unsplash.com/random/400x400?river',
-            labels:['camping','hiking']
-        },
-        {
-            _id: utilService.makeId(),
-            name: 'Neveragain', 
-            lat: 32.047201, 
-            lng: 34.832581, 
-            photo: null, 
-            note: 'demo data for note',
-             createdAt: Date.now(), 
-             updatedAt: null ,
-             imgUrl: 'https://source.unsplash.com/random/400x400?forest',
-             labels:['city','street']
-        }
+            {
+                _id: utilService.makeId(),
+                name: 'Greatplace',
+                lat: 32.047104,
+                lng: 34.832384,
+                photo: null,
+                note: 'demo data for note',
+                createdAt: Date.now(),
+                updatedAt: null,
+                imgUrl: 'https://source.unsplash.com/random/400x400?river',
+                labels: ['forest', 'hiking']
+            },
+            {
+                _id: utilService.makeId(),
+                name: 'Neveragain',
+                lat: 32.047201,
+                lng: 34.832581,
+                photo: null,
+                note: 'demo data for note',
+                createdAt: Date.now(),
+                updatedAt: null,
+                imgUrl: 'https://source.unsplash.com/random/400x400?forest',
+                labels: ['beach', 'hiking']
+            }
         ]
         utilService.saveToStorage(LOCS_KEY, locations)
     }

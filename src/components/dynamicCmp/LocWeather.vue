@@ -1,6 +1,7 @@
 <template>
  <section class="loc-weather">
   <h2>LocWeather</h2>
+  <pre>{{ props.info }}</pre>
  </section>
 </template>
 

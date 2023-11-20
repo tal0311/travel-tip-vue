@@ -5,13 +5,18 @@ import { locService } from "@/services/loc.service.js";
 export const useLocsStore = defineStore('loc', () => {
   const locs = ref(null)
   const currLoc = ref(null)
-  const filterBy = ref({txt:'', label:''})
+  const filterBy = ref({ txt: '', type: [] })
 
   const getLocs = computed(() => locs.value)
 
   async function loadLocs() {
-    locs.value = await locService.getLocs()
-    
+    locs.value = await locService.getLocs(filterBy.value)
+
+  }
+
+  function setFilter(filter) {
+    filterBy.value = filter
+    loadLocs()
   }
 
   async function addLoc(loc) {
@@ -30,5 +35,5 @@ export const useLocsStore = defineStore('loc', () => {
     locs.value.splice(idx, 1, updatedLoc)
   }
 
-  return { getLocs, loadLocs }
+  return { getLocs, loadLocs, setFilter, addLoc, removeLoc, updateLoc, filterBy }
 })
