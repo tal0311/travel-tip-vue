@@ -6,14 +6,12 @@
 </template>
 
 <script setup>
-// import { defineProps } from 'vue'
+
 import LocPreview from '@/components/LocPreview.vue'
 
 const props = defineProps({
  locs: {
   type: Array,
-
-
  },
 
 })

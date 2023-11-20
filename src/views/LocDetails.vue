@@ -6,30 +6,39 @@
   <ul class="label-list">
    <li v-for="label, idx in loc.labels" :key="idx">{{ label }}</li>
   </ul>
-  <!-- <p>{{ loc.note }}</p> -->
 
-  <button v-for="tab in tabs" :key="tab" :class="['tab-button', { active: currentTab === tab }]"
-   @click="updateTabs(tab)">
-   {{ tab }}
-  </button>
+  <div>
+   <button @click="updateTabs('Notes')">Show Notes</button>
+   <button @click="updateTabs('Updates')">Show Updates</button>
+   <button @click="updateTabs('Weather')">Show Weather</button>
 
-  <component :is="currentTab" class="tab" :info="info"></component>
-  <!-- <pre>{{ loc }}</pre> -->
+
+
+   <Notes v-if="currentTab === 'Notes'" :info="loc.note" />
+   <Updates v-if="currentTab === 'Updates'" :info="loc.updatedAt" />
+   <Weather v-if="currentTab === 'Weather'" :info="{ lat: loc.lat, lng: loc.lng }" />
+
+
+
+  </div>
+
  </div>
 </template>
 
 <script setup>
+
+//TODO: DYNAMIC CMP
 import Updates from '@/components/dynamicCmp/LocUpdates.vue'
 import Notes from '@/components/dynamicCmp/LocNotes.vue'
 import Weather from '@/components/dynamicCmp/LocWeather.vue'
 
 import { useRoute } from 'vue-router'
-import { onBeforeMount, ref } from 'vue'
+import { computed, onBeforeMount, ref, watchEffect } from 'vue'
 import { locService } from '@/services/loc.service';
-import LocWeatherVue from '@/components/dynamicCmp/LocWeather.vue'
+
 
 const route = useRoute()
-const tabs = ['Notes', 'Updates', 'Weather',]
+// const tabs = ['Notes', 'Updates', 'Weather',]
 
 onBeforeMount(() => {
  loadLoc()
@@ -41,28 +50,33 @@ async function loadLoc() {
 }
 
 const currentTab = ref('Notes')
-const info = ref(null)
-const currentTabComponent = ref('Notes')
+
+// const componentTab = computed(() => currentTab)
+
+watchEffect(() =>
+ console.log('currentTab:', currentTab.value)
+)
+
 function updateTabs(tab) {
-
  currentTab.value = tab
- currentTabComponent.value = tab
- if (tab === 'Notes') info.value = loc.value.note
- if (tab === 'Updates') info.value = loc.value.updatedAt
- if (tab === 'Weather') getLocationWeather()
- console.log('info.value:', info.value)
 }
 
-function getLocationWeather() {
- console.log('getLocationWeather');
 
-}
+
+
 
 </script>
 
 <style scoped lang="scss">
-.loc-details {
- /* Your component styles here */
+.demo {
+ font-family: sans-serif;
+ border: 1px solid #eee;
+ border-radius: 2px;
+ padding: 20px 30px;
+ margin-top: 1em;
+ margin-bottom: 40px;
+ user-select: none;
+ overflow-x: auto;
 }
 
 .tab-button {
@@ -82,5 +96,10 @@ function getLocationWeather() {
 
 .tab-button.active {
  background: #e0e0e0;
+}
+
+.demo-tab {
+ border: 1px solid #ccc;
+ padding: 10px;
 }
 </style>

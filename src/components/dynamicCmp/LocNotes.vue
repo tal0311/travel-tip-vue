@@ -6,16 +6,17 @@
 </template>
 
 <script setup>
-
 import { onBeforeMount } from 'vue'
 
-onBeforeMount(() => {
- console.log('props.info:', props.info)
-})
 const props = defineProps({
  info: {
   type: String,
  },
+})
+
+
+onBeforeMount(() => {
+ console.log('props.info:', props.info)
 })
 
 </script>

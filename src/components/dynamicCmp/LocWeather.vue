@@ -5,6 +5,17 @@
 </template>
 
 <script setup>
+import { onBeforeMount } from 'vue'
+const props = defineProps({
+ info: {
+  type: Object,
+ },
+})
+
+
+onBeforeMount(() => {
+ console.log('props.info:', props.info)
+})
 
 </script>
 
