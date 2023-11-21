@@ -1,15 +1,71 @@
+
 <template>
  <section class="app-map">
   <h2>app map</h2>
-  <GoogleMap api-key="YOUR_GOOGLE_MAPS_API_KEY" style="width: 100%; height: 500px" :center="center" :zoom="15">
+  <GoogleMap :api-key="MAP_KEY" style="width: 100%; height: 500px" :center="center" :zoom="15" @click="handleMapClick">
+
+   <GoogleInfoWindow v-if="showInfoWindow" :position="infoWindowPosition" @closeclick="showInfoWindow = false">
+
+
+    <section class="info-window grid">
+     <h3>Selected location</h3>
+     <input v-model="selectedPos.name" type="text" placeholder="Name this location">
+     <div>
+      <button @click="handleAddPos">Add location</button>
+      <button>cancel</button>
+     </div>
+    </section>
+
+   </GoogleInfoWindow>
+
    <Marker :options="{ position: center }" />
   </GoogleMap>
  </section>
 </template>
 
 <script setup>
+import { onBeforeMount, ref } from "vue";
+import { locService } from '@/services/loc.service.js'
 import { GoogleMap, Marker } from "vue3-google-map";
+const center = { lat: 40.689247, lng: -74.044502 }
+const MAP_KEY = import.meta.env.VITE_MAP_API_KEY
 
+const infoWindowPosition = ref(null)
+const showInfoWindow = ref(false)
+const markerOptions = { position: center, label: "L", title: "LADY LIBERTY" };
+
+function handleMapClick(ev) {
+ const { lat, lng } = ev.latLng
+ infoWindowPosition.value = { lat: lat(), lng: lng() }
+ showInfoWindow.value = !showInfoWindow.value
+ selectedPos.value.lat = lat()
+ selectedPos.value.lng = lng()
+}
+
+const emit = defineEmits(['add-location'])
+const selectedPos = ref(locService.getEmptyLoc())
+function handleAddPos() {
+ selectedPos.value
+ showInfoWindow.value = false
+ console.log(selectedPos.value);
+ emit('add-location', { ...selectedPos.value })
+
+}
+onBeforeMount(() => {
+
+})
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+.info-window {
+ display: grid;
+ grid-auto-flow: row;
+ width: 50vw;
+ position: fixed;
+ top: 50%;
+ left: 50%;
+ transform: translate(-50%, -50%);
+ background: #fff;
+ padding: 0.5rem;
+}
+</style>

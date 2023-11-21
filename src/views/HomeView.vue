@@ -2,7 +2,7 @@
 
 <template>
   <AppSearch @search="filterLocs" />
-  <AppMap />
+  <AppMap @add-location="addPlace" />
   <LocList :locs="locs" />
 </template>
 
@@ -26,6 +26,11 @@ async function loadLocs() {
 function filterLocs(filterBy) {
   locsStore.filterBy = filterBy
   loadLocs()
+}
+
+async function addPlace(locToAdd) {
+  console.log('locToAdd:', locsStore)
+  await locsStore.addLoc(locToAdd)
 }
 
 

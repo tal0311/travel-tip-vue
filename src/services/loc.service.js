@@ -7,7 +7,8 @@ export const locService = {
     removeLoc,
     getLocById,
     updateLoc,
-    createLoc
+    createLoc,
+    getEmptyLoc
 
 }
 
@@ -55,6 +56,21 @@ function createLoc(name, lat, lng, weather, createdAt, updatedAt) {
         weather,
         createdAt,
         updatedAt
+    }
+}
+
+function getEmptyLoc() {
+    return {
+        name: '',
+        lat: null,
+        lng: null,
+        weather: '',
+        createdAt: null,
+        updatedAt: null,
+        labels: [],
+        note: 'Add notes to this location',
+        imgUrl: 'https://source.unsplash.com/random/400x400?beach',
+        photo: null
     }
 }
 
