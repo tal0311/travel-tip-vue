@@ -3,10 +3,9 @@ import { storageService } from "./async-storage.service.js"
 
 export const locService = {
     getLocs,
-    addLoc,
+    save,
     removeLoc,
     getLocById,
-    updateLoc,
     createLoc,
     getEmptyLoc
 
@@ -31,7 +30,7 @@ async function getLocs(filterBy) {
     return locs
 }
 
-async function addLoc(loc) {
+async function save(loc) {
     if (loc._id) return await storageService.put(LOCS_KEY, loc)
     else return await storageService.post(LOCS_KEY, loc)
 }
@@ -44,9 +43,6 @@ async function getLocById(locId) {
     return await storageService.get(LOCS_KEY, locId)
 }
 
-async function updateLoc(loc) {
-    return await storageService.put(LOCS_KEY, loc)
-}
 
 function createLoc(name, lat, lng, weather, createdAt, updatedAt) {
     return {

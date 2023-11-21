@@ -29,10 +29,21 @@ export const useLocsStore = defineStore('loc', () => {
     locs.value = locs.value.filter(loc => loc._id !== locId)
   }
 
-  async function updateLoc(loc) {
-    const updatedLoc = await locService.updateLoc(loc)
+  async function updateLoc({_id, key, value}) {
+   debugger
+   
+   
+    const locToUpdate = await locService.getLocById(_id)
+
+    locToUpdate[key] = value
+    // console.debug('♠️ ~ file: locsStore.js:36 ~ updateLoc ~ locToUpdate:', locToUpdate)
+    const updatedLoc = await locService.save(locToUpdate)
+    
+
+    console.log('locs.value:', locs.value)
     const idx = locs.value.findIndex(currLoc => currLoc._id === updatedLoc._id)
     locs.value.splice(idx, 1, updatedLoc)
+    return updatedLoc
   }
 
   return { getLocs, loadLocs, setFilter, addLoc, removeLoc, updateLoc, filterBy }

@@ -14,7 +14,7 @@
 
 
 
-   <Notes v-if="currentTab === 'Notes'" :info="loc.note" />
+   <Notes v-if="currentTab === 'Notes'" @update-info="updateLoc" :info="loc.note" />
    <Updates v-if="currentTab === 'Updates'" :info="loc.updatedAt" />
    <Weather v-if="currentTab === 'Weather'" :info="{ lat: loc.lat, lng: loc.lng }" />
 
@@ -34,8 +34,10 @@ import Weather from '@/components/dynamicCmp/LocWeather.vue'
 
 import { useRoute } from 'vue-router'
 import { computed, onBeforeMount, ref, watchEffect } from 'vue'
+import { useLocsStore } from '@/stores/LocsStore'
 import { locService } from '@/services/loc.service';
 
+const locsStore = useLocsStore()
 
 const route = useRoute()
 // const tabs = ['Notes', 'Updates', 'Weather',]
@@ -59,6 +61,22 @@ watchEffect(() =>
 
 function updateTabs(tab) {
  currentTab.value = tab
+}
+
+async function updateLoc({ key, value }) {
+ console.debug('♠️ ~ file: LocDetails.vue:65 ~ updateLoc ~ data, type:', key, value)
+ const locToUpdate = {
+  _id: loc.value._id,
+  key,
+  value,
+ }
+
+ loc.value = await locsStore.updateLoc(locToUpdate)
+
+
+
+
+
 }
 
 
