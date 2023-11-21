@@ -1,6 +1,7 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
 import { locService } from "@/services/loc.service.js";
+import {eventBus,showSuccessMsg} from '@/services/event-bus.service'
 
 export const useLocsStore = defineStore('loc', () => {
   const locs = ref(null)
@@ -20,19 +21,18 @@ export const useLocsStore = defineStore('loc', () => {
   }
 
   async function addLoc(loc) {
-    const addedLoc = await locService.addLoc(loc)
+    const addedLoc = await locService.save(loc)
     locs.value.push(addedLoc)
   }
 
   async function removeLoc(locId) {
-    await locService.deleteLoc(locId)
+    await locService.removeLoc(locId)
     locs.value = locs.value.filter(loc => loc._id !== locId)
+
+    showSuccessMsg('Location removed')
   }
 
   async function updateLoc({_id, key, value}) {
-   debugger
-   
-   
     const locToUpdate = await locService.getLocById(_id)
     locToUpdate[key] = value
       const updatedLoc = await locService.save(locToUpdate)    

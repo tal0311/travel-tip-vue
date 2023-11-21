@@ -14,19 +14,29 @@
 
 <script setup>
 import { eventBus } from '@/services/event-bus.service.js'
-import { computed, onUnmounted, ref } from 'vue'
+import { computed, onUnmounted, ref, onBeforeMount } from 'vue'
 
-const msg = ref('')
-
-const unsubscribe = eventBus.on('show-msg', (msg) => {
- msg.value = msg
- setTimeout(() => {
-  state.msg = null
- }, 5000)
+const msg = ref(null)
+const unsubscribe = ref(null)
+onBeforeMount(() => {
+ unsubscribe.value = eventBus.on('show-msg', handleMsg)
 })
 
+
+function handleMsg(userMsg) {
+ console.log('msg:', userMsg)
+ msg.value = userMsg
+
+ setTimeout(() => {
+  msg.value = null
+ }, 5000)
+
+}
+
+
+
 onUnmounted(() => {
- unsubscribe()
+ unsubscribe.value()
 })
 
 </script>

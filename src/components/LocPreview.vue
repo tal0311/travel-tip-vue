@@ -6,6 +6,9 @@
   <ul class="label-list">
    <li v-for="label, idx in props.loc.labels" :key="idx">{{ label }}</li>
   </ul>
+  <div class="loc-actions">
+   <button @click.stop="removeLoc">remove</button>
+  </div>
  </section>
 </template>
 
@@ -20,10 +23,14 @@ const props = defineProps({
  },
 });
 
-
+const emit = defineEmits(['remove-loc'])
 const router = useRouter()
 function navigateTo(locId) {
  router.push(`/loc/${locId}`)
+}
+
+function removeLoc() {
+ emit('remove-loc', props.loc._id)
 }
 </script>
 

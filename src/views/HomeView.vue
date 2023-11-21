@@ -3,7 +3,7 @@
 <template>
   <AppSearch @search="filterLocs" />
   <AppMap @add-location="addPlace" />
-  <LocList :locs="locs" />
+  <LocList :locs="locs" @remove-loc="removeLoc" />
 </template>
 
 <script setup>
@@ -29,11 +29,12 @@ function filterLocs(filterBy) {
 }
 
 async function addPlace(locToAdd) {
-  console.log('locToAdd:', locsStore)
   await locsStore.addLoc(locToAdd)
 }
 
-
+function removeLoc(LocId) {
+  locsStore.removeLoc(LocId)
+}
 
 
 
