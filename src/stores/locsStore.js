@@ -34,13 +34,8 @@ export const useLocsStore = defineStore('loc', () => {
    
    
     const locToUpdate = await locService.getLocById(_id)
-
     locToUpdate[key] = value
-    // console.debug('♠️ ~ file: locsStore.js:36 ~ updateLoc ~ locToUpdate:', locToUpdate)
-    const updatedLoc = await locService.save(locToUpdate)
-    
-
-    console.log('locs.value:', locs.value)
+      const updatedLoc = await locService.save(locToUpdate)    
     const idx = locs.value.findIndex(currLoc => currLoc._id === updatedLoc._id)
     locs.value.splice(idx, 1, updatedLoc)
     return updatedLoc
