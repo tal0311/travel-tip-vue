@@ -3,9 +3,7 @@
  <section @click="navigateTo(props.loc._id)" class="loc-preview">
   <h2>{{ props.loc.name }}</h2>
   <img height="400" :src="props.loc.imgUrl" alt="Location Image" />
-  <ul class="label-list">
-   <li v-for="label, idx in props.loc.labels" :key="idx">{{ label }}</li>
-  </ul>
+  <LabelList :labels="props.loc.labels" />
   <div class="loc-actions">
    <button @click.stop="removeLoc">remove</button>
   </div>
@@ -13,7 +11,7 @@
 </template>
 
 <script setup>
-
+import LabelList from '@/components/LabelList.vue'
 import { useRouter } from 'vue-router'
 
 const props = defineProps({

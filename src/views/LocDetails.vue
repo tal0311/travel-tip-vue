@@ -3,10 +3,8 @@
  <div class="loc-details" v-if="loc">
   <h3>{{ loc.name }}</h3>
   <img :src="loc.imgUrl" alt="Location Image" />
-  <ul class="label-list">
-   <li v-for="label, idx in loc.labels" :key="idx">{{ label }}</li>
-  </ul>
 
+  <LabelList :labels="loc.labels" />
   <div>
    <button @click="updateTabs('Notes')">Show Notes</button>
    <button @click="updateTabs('Updates')">Show Updates</button>
@@ -15,7 +13,7 @@
 
 
    <Notes v-if="currentTab === 'Notes'" @update-info="updateLoc" :info="loc.note" />
-   <Updates v-if="currentTab === 'Updates'" :info="loc.updatedAt" />
+   <Updates v-if="currentTab === 'Updates'" :info="updates" @update-info="updateLoc" />
    <Weather v-if="currentTab === 'Weather'" :info="{ lat: loc.lat, lng: loc.lng }" />
 
 
@@ -31,19 +29,23 @@
 import Updates from '@/components/dynamicCmp/LocUpdates.vue'
 import Notes from '@/components/dynamicCmp/LocNotes.vue'
 import Weather from '@/components/dynamicCmp/LocWeather.vue'
+import LabelList from '@/components/LabelList.vue'
 
 import { useRoute } from 'vue-router'
 import { computed, onBeforeMount, ref, watchEffect } from 'vue'
-import { useLocsStore } from '@/stores/LocsStore'
+import { useLocsStore } from '@/stores/locsStore'
+import { useUpdatedStore } from '@/stores/UpdateStore'
 import { locService } from '@/services/loc.service';
 
 const locsStore = useLocsStore()
+const updatedStore = useUpdatedStore()
 
 const route = useRoute()
 // const tabs = ['Notes', 'Updates', 'Weather',]
 
 onBeforeMount(() => {
  loadLoc()
+ loadUpdates()
 })
 
 const loc = ref(null)
@@ -51,20 +53,30 @@ async function loadLoc() {
  loc.value = await locService.getLocById(route.params.locId)
 }
 
+
+const updates = computed(() => updatedStore.getUpdates)
+async function loadUpdates() {
+ updateLoc.value = await updatedStore.loadUpdates(route.params.locId)
+}
+
 const currentTab = ref('Notes')
 
 // const componentTab = computed(() => currentTab)
 
 watchEffect(() =>
- console.log('currentTab:', currentTab.value)
+ console.log('currentTab:', currentTab.value),
+ console.log('updates:', updates.value)
 )
 
 function updateTabs(tab) {
  currentTab.value = tab
 }
 
+async function AddNewUpdate() {
+
+}
+
 async function updateLoc({ key, value }) {
- console.debug('♠️ ~ file: LocDetails.vue:65 ~ updateLoc ~ data, type:', key, value)
  const locToUpdate = {
   _id: loc.value._id,
   key,
