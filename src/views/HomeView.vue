@@ -3,7 +3,7 @@
 <template>
   <AppSearch @search="filterLocs" />
   <AppMap @add-location="addPlace" />
-  <LocList :locs="locs" @remove-loc="removeLoc" />
+  <LocList :locs="locs" @remove-loc="removeLoc" @favorite="toggleFav" />
 </template>
 
 <script setup>
@@ -34,6 +34,11 @@ async function addPlace(locToAdd) {
 
 function removeLoc(LocId) {
   locsStore.removeLoc(LocId)
+}
+
+function toggleFav(locId) {
+  locsStore.updateLoc({ _id: locId, key: 'isFav', value: null })
+
 }
 
 

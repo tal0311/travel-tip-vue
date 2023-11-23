@@ -1,6 +1,7 @@
 
 <template>
  <section @click="navigateTo(props.loc._id)" class="loc-preview">
+  <button @click.stop="addToFav">favorites</button>
   <h2>{{ props.loc.name }}</h2>
   <img height="400" :src="props.loc.imgUrl" alt="Location Image" />
   <LabelList :labels="props.loc.labels" />
@@ -21,7 +22,7 @@ const props = defineProps({
  },
 });
 
-const emit = defineEmits(['remove-loc'])
+const emit = defineEmits(['remove-loc', 'favorite'])
 const router = useRouter()
 function navigateTo(locId) {
  router.push(`/loc/${locId}`)
@@ -29,6 +30,9 @@ function navigateTo(locId) {
 
 function removeLoc() {
  emit('remove-loc', props.loc._id)
+}
+function addToFav() {
+ emit('favorite', props.loc._id)
 }
 </script>
 

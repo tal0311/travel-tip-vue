@@ -34,12 +34,19 @@ export const useLocsStore = defineStore('loc', () => {
 
   async function updateLoc({_id, key, value}) {
     const locToUpdate = await locService.getLocById(_id)
-    locToUpdate[key] = value
+    
+    if(!value){
+      locToUpdate[key] = !locToUpdate[key]
+    }else{
+      locToUpdate[key] = value
+    }
       const updatedLoc = await locService.save(locToUpdate)    
     const idx = locs.value.findIndex(currLoc => currLoc._id === updatedLoc._id)
     locs.value.splice(idx, 1, updatedLoc)
+    
     return updatedLoc
   }
 
+ 
   return { getLocs, loadLocs, setFilter, addLoc, removeLoc, updateLoc, filterBy }
 })

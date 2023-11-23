@@ -87,6 +87,7 @@ function createLocations() {
                 createdAt: Date.now(),
                 updatedAt: null,
                 imgUrl: 'https://source.unsplash.com/random/400x400?river',
+                isFav:true,
                 labels: ['forest', 'hiking']
             },
             {
@@ -99,6 +100,7 @@ function createLocations() {
                 createdAt: Date.now(),
                 updatedAt: null,
                 imgUrl: 'https://source.unsplash.com/random/400x400?forest',
+                isFav:false,
                 labels: ['beach', 'hiking']
             }
         ]
