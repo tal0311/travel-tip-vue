@@ -52,9 +52,8 @@ function toggleFav(locId) {
 </script>
 <style lang="scss" scoped>
 details {
-  // border: 1px solid #aaa;
   box-shadow: 0 0 2px 0px #c9c9c9;
-  border-radius: 4px;
+  border-radius: 2px;
   padding: 0.5em 0.5em 0;
 
   summary {
