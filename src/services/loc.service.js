@@ -18,8 +18,12 @@ createLocations()
 
 
 async function getLocs(filterBy) {
-    console.log('filter', filterBy);
+    
     let locs = await storageService.query(LOCS_KEY)
+
+    if(filterBy.isFav){
+        locs= locs.filter(loc=>loc.isFav)
+    }
     if (filterBy.txt) {
         const regex = new RegExp(filterBy.txt, 'i')
         locs = locs.filter(loc => regex.test(loc.name))

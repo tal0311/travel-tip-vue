@@ -6,7 +6,7 @@ import {eventBus,showSuccessMsg} from '@/services/event-bus.service'
 export const useLocsStore = defineStore('loc', () => {
   const locs = ref(null)
   const currLoc = ref(null)
-  const filterBy = ref({ txt: '', type: [] })
+  const filterBy = ref({ txt: '', type: [], isFav:false })
 
   const getLocs = computed(() => locs.value)
 
@@ -16,8 +16,8 @@ export const useLocsStore = defineStore('loc', () => {
   }
 
   function setFilter(filter) {
-    filterBy.value = filter
-    loadLocs()
+    filterBy.value = {...filterBy.value,...filter}
+    console.debug('♠️ ~ file: locsStore.js:20 ~ setFilter ~ filterBy.value:', filterBy.value)
   }
 
   async function addLoc(loc) {

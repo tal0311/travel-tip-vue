@@ -6,6 +6,7 @@
     <nav class="home-nav">
       <RouterLink to="/">Home</RouterLink>
       <RouterLink to="/about">About</RouterLink>
+      <RouterLink to="/favorites">Favorites</RouterLink>
       <RouterLink to="/loc/123">Location details</RouterLink>
     </nav>
   </header>

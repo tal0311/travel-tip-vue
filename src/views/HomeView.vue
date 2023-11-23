@@ -2,8 +2,11 @@
 
 <template>
   <AppSearch @search="filterLocs" />
-  <AppMap @add-location="addPlace" />
-  <LocList :locs="locs" @remove-loc="removeLoc" @favorite="toggleFav" />
+  <details :title="title">
+    <summary>Map</summary>
+    <AppMap @add-location="addPlace" />
+  </details>
+  <LocList :locs="locs" header="Your locations" @remove-loc="removeLoc" @favorite="toggleFav" />
 </template>
 
 <script setup>
@@ -22,6 +25,8 @@ const locs = computed(() => locsStore.getLocs)
 async function loadLocs() {
   await locsStore.loadLocs();
 }
+
+const title = ref('Tap to open')
 
 function filterLocs(filterBy) {
   locsStore.filterBy = filterBy
@@ -45,3 +50,27 @@ function toggleFav(locId) {
 
 
 </script>
+<style lang="scss" scoped>
+details {
+  // border: 1px solid #aaa;
+  box-shadow: 0 0 2px 0px #c9c9c9;
+  border-radius: 4px;
+  padding: 0.5em 0.5em 0;
+
+  summary {
+    position: relative;
+    font-weight: bold;
+    margin: -0.5em -0.5em 0;
+    padding: 0.5em;
+  }
+
+  &[open] {
+    padding: 0.5em;
+  }
+
+  &[open] summary {
+    box-shadow: 0 0 2px 0px #c9c9c9;
+    margin-bottom: 0.5em;
+  }
+}
+</style>
