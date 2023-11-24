@@ -69,7 +69,7 @@ function getEmptyLoc() {
         updatedAt: null,
         labels: [],
         note: 'Add notes to this location',
-        imgUrl: 'https://source.unsplash.com/random/400x400?beach',
+        imgUrl: 'https://source.unsplash.com/random/800x800?beach',
         photo: null
     }
 }
@@ -90,7 +90,7 @@ function createLocations() {
                 note: 'demo data for note',
                 createdAt: Date.now(),
                 updatedAt: null,
-                imgUrl: 'https://source.unsplash.com/random/400x400?river',
+                imgUrl: 'https://source.unsplash.com/random/800x800?river',
                 isFav:true,
                 labels: ['forest', 'hiking']
             },
@@ -103,7 +103,7 @@ function createLocations() {
                 note: 'demo data for note',
                 createdAt: Date.now(),
                 updatedAt: null,
-                imgUrl: 'https://source.unsplash.com/random/400x400?forest',
+                imgUrl: 'https://source.unsplash.com/random/800x800?forest',
                 isFav:false,
                 labels: ['beach', 'hiking']
             }

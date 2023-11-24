@@ -4,12 +4,13 @@
   <header class="grid loc-header">
    <!-- {{ getIcon }} -->
    <h2>{{ props.loc.name }}</h2>
-   <button class="icon" @click.stop="addToFav" v-html="$getSvg(getIcon)"></button>
+   <button class="icon" data-title="Toggle bookmark" @click.stop="addToFav" v-html="$getSvg(getIcon)"></button>
   </header>
   <img height="400px" :src="props.loc.imgUrl" alt="Location Image" />
   <LabelList :labels="props.loc.labels" />
   <div class="loc-actions">
-   <button class="icon remove-loc" @click.stop="removeLoc" v-html="$getSvg('remove')"></button>
+   <button data-title="Remove location" class="icon remove-loc" @click.stop="removeLoc"
+    v-html="$getSvg('remove')"></button>
   </div>
  </section>
 </template>
@@ -48,13 +49,10 @@ const getIcon = computed(() => {
 @import '@/assets/styles/setup/_variables.scss';
 
 .loc-preview {
- border: 1px solid #c9c9c9;
- // box-shadow: 0 0 2px 0px #c9c9c9;
+ border: 1px solid $clr8;
  padding: 10px;
  margin-bottom: 10px;
  text-decoration: none;
-
-
 
  .loc-header {
   grid-auto-flow: column;
@@ -82,9 +80,5 @@ const getIcon = computed(() => {
    opacity: 1;
   }
  }
-}
-
-svg.star-full {
- fill: $clr6;
 }
 </style>

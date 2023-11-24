@@ -20,27 +20,29 @@ import UserMsg from '@/components/UserMsg.vue';
 import AppHeader from './components/AppHeader.vue';
 </script>
 
-<style scoped>
+<style >
+@import '@/assets/styles/setup/_variables.scss';
+
 .app-container {
   margin-top: 1rem
 }
 
-header {
+/* header {
   line-height: 1.5;
   max-height: 100vh;
-}
+} */
 
 .logo {
   display: block;
   margin: 0 auto 2rem;
 }
 
-nav {
+/* nav {
   width: 100%;
   font-size: 12px;
   text-align: center;
   margin-top: 2rem;
-}
+} */
 
 /* nav.home-nav a.router-link-exact-active {
   color: var(--color-text);
