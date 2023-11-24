@@ -1,18 +1,16 @@
 
 <template>
-  <header>
+  <div class="app-container main-layout">
     <AppHeader />
-
-    <nav class="home-nav">
+    <!-- <nav class="home-nav">
       <RouterLink to="/">Home</RouterLink>
       <RouterLink to="/about">About</RouterLink>
       <RouterLink to="/favorites">Favorites</RouterLink>
       <RouterLink to="/loc/123">Location details</RouterLink>
-    </nav>
-  </header>
-
-  <RouterView />
-  <UserMsg />
+    </nav> -->
+    <RouterView />
+    <UserMsg />
+  </div>
 </template>
 
 <script setup>
@@ -23,6 +21,10 @@ import AppHeader from './components/AppHeader.vue';
 </script>
 
 <style scoped>
+.app-container {
+  margin-top: 1rem
+}
+
 header {
   line-height: 1.5;
   max-height: 100vh;

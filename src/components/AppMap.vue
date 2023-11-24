@@ -1,7 +1,6 @@
 
 <template>
  <section class="app-map">
-  <h2>app map</h2>
   <GoogleMap :api-key="MAP_KEY" style="width: 100%; height: 500px" :center="center" :zoom="15" @click="handleMapClick">
 
    <GoogleInfoWindow v-if="showInfoWindow" :position="infoWindowPosition" @closeclick="showInfoWindow = false">
@@ -27,6 +26,7 @@
 import { onBeforeMount, ref } from "vue";
 import { locService } from '@/services/loc.service.js'
 import { GoogleMap, Marker } from "vue3-google-map";
+
 const center = { lat: 40.689247, lng: -74.044502 }
 const MAP_KEY = import.meta.env.VITE_MAP_API_KEY
 
@@ -51,9 +51,7 @@ function handleAddPos() {
  emit('add-location', { ...selectedPos.value })
 
 }
-onBeforeMount(() => {
 
-})
 </script>
 
 <style lang="scss" scoped>

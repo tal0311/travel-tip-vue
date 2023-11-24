@@ -12,7 +12,6 @@ export const useLocsStore = defineStore('loc', () => {
 
   async function loadLocs() {
     locs.value = await locService.getLocs(filterBy.value)
-
   }
 
   function setFilter(filter) {
@@ -23,6 +22,7 @@ export const useLocsStore = defineStore('loc', () => {
   async function addLoc(loc) {
     const addedLoc = await locService.save(loc)
     locs.value.push(addedLoc)
+    showSuccessMsg('Location Added')
   }
 
   async function removeLoc(locId) {
@@ -43,7 +43,7 @@ export const useLocsStore = defineStore('loc', () => {
       const updatedLoc = await locService.save(locToUpdate)    
     const idx = locs.value.findIndex(currLoc => currLoc._id === updatedLoc._id)
     locs.value.splice(idx, 1, updatedLoc)
-    
+    showSuccessMsg('Location updated')
     return updatedLoc
   }
 

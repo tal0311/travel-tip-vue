@@ -1,11 +1,10 @@
 <template>
- <section>
-  <div class="user-preview">
+ <section class="user-preview" :style="{ background: props.user.color }">
+  <div>
    <div v-if="user">
     <img v-if="user.imgUrl" :src="user.imgUrl" />
     <div v-else>{{ getInitials(user.username) }}</div>
    </div>
-
   </div>
  </section>
 </template>
@@ -27,4 +26,11 @@ function getInitials(str) {
 
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.user-preview {
+ padding: 0.2rem 0.3rem;
+ border-radius: 100vh;
+ color: #fff;
+ margin-bottom: 2rem;
+}
+</style>

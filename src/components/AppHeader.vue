@@ -1,10 +1,10 @@
 <template>
- <header>
+ <header class="app-header grid">
   <UserPreview :user="user" />
   <div class="nav-container">
-   <button>W</button>
-   <nav>
-    <ul>
+   <button class="icon" @click="isOpen = !isOpen" v-html="$getSvg('menu')" data-title="Open menu"></button>
+   <nav class="app-nav" v-if="isOpen">
+    <ul class="clean-list">
      <li>home</li>
      <li>about</li>
      <li>favorites</li>
@@ -20,6 +20,23 @@ import UserPreview from './UserPreview.vue';
 import { ref } from 'vue'
 const user = ref({ username: 'Tal Amit', email: 'tal.Amit0311@gmail.com', color: 'steelblue' })
 
+const isOpen = ref(false)
+
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.app-header {
+ grid-auto-flow: column;
+ justify-content: space-between;
+}
+
+.app-nav {
+ position: absolute;
+ transform: translate(-70%);
+ background: #fff;
+ box-shadow: 0 0 2px 0px #c9c9c9;
+ padding: 0.5rem;
+
+
+}
+</style>

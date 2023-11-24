@@ -81,7 +81,7 @@ i {
     content: attr(data-title);
     position: absolute;
     font-size: 12px;
-    background: #f10d0d;
+    background: #333;
     color: #fff;
     padding: 0.2em 0.3em;
     border-radius: 0.2em;
@@ -89,4 +89,10 @@ i {
     bottom: -25px;
     width: max-content;
     left: 12px;
+}
+
+.icon {
+    background: none;
+    border: none;
+    cursor: pointer;
 }
