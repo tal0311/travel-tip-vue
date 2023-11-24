@@ -1,29 +1,33 @@
 
 <template>
  <section @click="navigateTo(props.loc._id)" class="loc-preview">
-  <button @click.stop="addToFav">favorites</button>
-  <h2>{{ props.loc.name }}</h2>
-  <img height="400" :src="props.loc.imgUrl" alt="Location Image" />
+  <header class="grid loc-header">
+   <!-- {{ getIcon }} -->
+   <h2>{{ props.loc.name }}</h2>
+   <button class="icon" @click.stop="addToFav" v-html="$getSvg(getIcon)"></button>
+  </header>
+  <img height="400px" :src="props.loc.imgUrl" alt="Location Image" />
   <LabelList :labels="props.loc.labels" />
   <div class="loc-actions">
-   <button @click.stop="removeLoc">remove</button>
+   <button class="icon remove-loc" @click.stop="removeLoc" v-html="$getSvg('remove')"></button>
   </div>
  </section>
 </template>
 
 <script setup>
 import LabelList from '@/components/LabelList.vue'
+import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 
 const props = defineProps({
  loc: {
   type: Object,
-
  },
 });
 
 const emit = defineEmits(['remove-loc', 'favorite'])
 const router = useRouter()
+
 function navigateTo(locId) {
  router.push(`/loc/${locId}`)
 }
@@ -34,15 +38,28 @@ function removeLoc() {
 function addToFav() {
  emit('favorite', props.loc._id)
 }
+
+const getIcon = computed(() => {
+ return props.loc.isFav ? 'star' : 'star-full'
+})
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets/styles/setup/_variables.scss';
+
 .loc-preview {
- box-shadow: 0 0 2px 0px #c9c9c9;
+ border: 1px solid #c9c9c9;
+ // box-shadow: 0 0 2px 0px #c9c9c9;
  padding: 10px;
  margin-bottom: 10px;
  text-decoration: none;
 
+
+
+ .loc-header {
+  grid-auto-flow: column;
+  justify-content: space-between;
+ }
 
  h2 {
   font-size: 18px;
@@ -54,5 +71,20 @@ function addToFav() {
   height: 200px;
   object-fit: cover;
  }
+
+ .remove-loc {
+  transition: opacity 0.2s ease-in-out;
+  opacity: 0;
+ }
+
+ &:hover {
+  .remove-loc {
+   opacity: 1;
+  }
+ }
+}
+
+svg.star-full {
+ fill: $clr6;
 }
 </style>
