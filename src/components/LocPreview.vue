@@ -9,8 +9,12 @@
   <img height="400px" :src="props.loc.imgUrl" alt="Location Image" />
   <LabelList :labels="props.loc.labels" />
   <div class="loc-actions">
-   <button data-title="Remove location" class="icon remove-loc" @click.stop="removeLoc"
-    v-html="$getSvg('remove')"></button>
+   <button data-title="Remove location" class="icon remove-loc action-in-hover" @click.stop="removeLoc"
+    v-html="$getSvg('remove')">
+   </button>
+   <button data-title="Pen map to location" class="icon pen-loc action-in-hover" @click.stop="penToLocation"
+    v-html="$getSvg('loc')">
+   </button>
   </div>
  </section>
 </template>
@@ -26,7 +30,7 @@ const props = defineProps({
  },
 });
 
-const emit = defineEmits(['remove-loc', 'favorite'])
+const emit = defineEmits(['remove-loc', 'favorite', 'onPenToLoc'])
 const router = useRouter()
 
 function navigateTo(locId) {
@@ -38,6 +42,12 @@ function removeLoc() {
 }
 function addToFav() {
  emit('favorite', props.loc._id)
+}
+
+function penToLocation() {
+ const { lat, lng } = props.loc
+ emit('onPenToLoc', { lat, lng })
+
 }
 
 const getIcon = computed(() => {
@@ -70,13 +80,13 @@ const getIcon = computed(() => {
   object-fit: cover;
  }
 
- .remove-loc {
+ .action-in-hover {
   transition: opacity 0.2s ease-in-out;
   opacity: 0;
  }
 
  &:hover {
-  .remove-loc {
+  .action-in-hover {
    opacity: 1;
   }
  }

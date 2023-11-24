@@ -6,9 +6,13 @@ import {eventBus,showSuccessMsg} from '@/services/event-bus.service'
 export const useLocsStore = defineStore('loc', () => {
   const locs = ref(null)
   const currLoc = ref(null)
+  // TODO: change to user location
+  const defaultCenter = { lat: 40.689247, lng: -74.044502 }
   const filterBy = ref({ txt: '', type: [], isFav:false })
 
   const getLocs = computed(() => locs.value)
+  const getCurrLoc = computed(()=> 
+     currLoc.value? currLoc.value: defaultCenter)
 
   async function loadLocs() {
     locs.value = await locService.getLocs(filterBy.value)
@@ -16,7 +20,6 @@ export const useLocsStore = defineStore('loc', () => {
 
   function setFilter(filter) {
     filterBy.value = {...filterBy.value,...filter}
-    console.debug('♠️ ~ file: locsStore.js:20 ~ setFilter ~ filterBy.value:', filterBy.value)
   }
 
   async function addLoc(loc) {
@@ -28,13 +31,11 @@ export const useLocsStore = defineStore('loc', () => {
   async function removeLoc(locId) {
     await locService.removeLoc(locId)
     locs.value = locs.value.filter(loc => loc._id !== locId)
-
     showSuccessMsg('Location removed')
   }
 
   async function updateLoc({_id, key, value}) {
     const locToUpdate = await locService.getLocById(_id)
-    
     if(!value){
       locToUpdate[key] = !locToUpdate[key]
     }else{
@@ -47,6 +48,10 @@ export const useLocsStore = defineStore('loc', () => {
     return updatedLoc
   }
 
+  function setCurrLoc(loc) {
+    currLoc.value = loc
+   }
+
  
-  return { getLocs, loadLocs, setFilter, addLoc, removeLoc, updateLoc, filterBy }
+  return { getLocs, loadLocs, setFilter, addLoc, removeLoc, updateLoc, filterBy, setCurrLoc, getCurrLoc }
 })

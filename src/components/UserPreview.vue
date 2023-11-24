@@ -31,6 +31,6 @@ function getInitials(str) {
  padding: 0.2rem 0.3rem;
  border-radius: 100vh;
  color: #fff;
- margin-bottom: 2rem;
+
 }
 </style>

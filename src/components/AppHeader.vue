@@ -28,11 +28,13 @@ const isOpen = ref(false)
 .app-header {
  grid-auto-flow: column;
  justify-content: space-between;
+ margin-bottom: 2rem;
+ align-items: center;
 }
 
 .app-nav {
  position: absolute;
- transform: translate(-70%);
+ transform: translate(-2.5rem, -1.2rem);
  background: #fff;
  box-shadow: 0 0 2px 0px #c9c9c9;
  padding: 0.5rem;

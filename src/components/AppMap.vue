@@ -1,7 +1,7 @@
 
 <template>
  <section class="app-map">
-  <GoogleMap :api-key="MAP_KEY" style="width: 100%; height: 500px" :center="center" :zoom="15" @click="handleMapClick">
+  <GoogleMap :api-key="MAP_KEY" style="width: 100%; height: 500px" :center="currLoc" :zoom="15" @click="handleMapClick">
 
    <GoogleInfoWindow v-if="showInfoWindow" :position="infoWindowPosition" @closeclick="showInfoWindow = false">
 
@@ -17,15 +17,16 @@
 
    </GoogleInfoWindow>
 
-   <Marker :options="{ position: center }" />
+   <Marker :options="{ position: currLoc }" />
   </GoogleMap>
  </section>
 </template>
 
 <script setup>
-import { onBeforeMount, ref } from "vue";
+import { onBeforeMount, ref, computed, watchEffect } from "vue";
 import { locService } from '@/services/loc.service.js'
 import { GoogleMap, Marker } from "vue3-google-map";
+import { useLocsStore } from '@/stores/locsStore'
 
 const center = { lat: 40.689247, lng: -74.044502 }
 const MAP_KEY = import.meta.env.VITE_MAP_API_KEY
@@ -49,8 +50,17 @@ function handleAddPos() {
  showInfoWindow.value = false
  console.log(selectedPos.value);
  emit('add-location', { ...selectedPos.value })
-
 }
+
+const locsStore = useLocsStore()
+const currLoc = computed(() => {
+ return locsStore.getCurrLoc
+})
+
+watchEffect(() => {
+ console.log('currLoc.value:', currLoc.value)
+})
+
 
 </script>
 
