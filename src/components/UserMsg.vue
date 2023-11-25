@@ -6,9 +6,9 @@
   <span>
    {{ msg.txt }}
   </span>
-  <i @click="msg = null" class="btn material-symbols-outlined">
-   close
-  </i>
+  <button class="icon close-btn grid" @click="msg = null" v-html="$getSvg('close')">
+
+  </button>
  </div>
 </template>
 
@@ -24,9 +24,7 @@ onBeforeMount(() => {
 
 
 function handleMsg(userMsg) {
- console.log('msg:', userMsg)
  msg.value = userMsg
-
  setTimeout(() => {
   msg.value = null
  }, 5000)
@@ -41,4 +39,31 @@ onUnmounted(() => {
 
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+@import '@/assets/styles/setup/variables.scss';
+
+.user-msg {
+ position: fixed;
+ bottom: 1rem;
+ left: 1rem;
+ color: $clr1;
+ background: $clr2;
+ display: grid;
+ grid-auto-flow: column;
+ padding: 0.2rem 0.5rem;
+ border-radius: 0.2rem;
+ gap: 2rem;
+
+ button {
+  i {
+   font-size: medium;
+   fill: $clr1;
+
+  }
+ }
+}
+
+.close-btn {
+ fill: $clr1;
+}
+</style>

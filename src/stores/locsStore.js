@@ -36,7 +36,6 @@ export const useLocsStore = defineStore('loc', () => {
 
   async function updateLoc({_id, key, value}) {
 
-    console.log(':',_id,key,value )
     const locToUpdate = await locService.getLocById(_id)
     if(!value){
       locToUpdate[key] = !locToUpdate[key]
