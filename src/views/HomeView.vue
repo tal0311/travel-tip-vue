@@ -6,16 +6,19 @@
     <summary>Map</summary>
     <AppMap @add-location="addPlace" />
   </details>
+
   <LocList :locs="locs" header="Your locations" @remove-loc="removeLoc" @favorite="toggleFav" @onPenToLoc="penToLoc" />
 </template>
 
 <script setup>
+
 import { GoogleMap, Marker } from "vue3-google-map";
 import { computed, onBeforeMount, ref } from 'vue'
 import { useLocsStore } from '@/stores/locsStore'
 import AppSearch from "@/components/AppSearch.vue";
 import AppMap from "@/components/AppMap.vue";
 import LocList from "@/components/LocList.vue";
+import AppLoaderVue from "../components/AppLoader.vue";
 
 const locsStore = useLocsStore();
 onBeforeMount(() => {
