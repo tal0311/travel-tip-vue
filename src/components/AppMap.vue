@@ -9,7 +9,7 @@
     <section class="info-window grid">
      <h3>Selected location</h3>
      <input v-model="selectedPos.name" type="text" placeholder="Name this location">
-     <div>
+     <div class="info-actions grid">
       <button @click="handleAddPos">Add location</button>
       <button>cancel</button>
      </div>
@@ -58,13 +58,17 @@ const currLoc = computed(() => {
 })
 
 watchEffect(() => {
- console.log('currLoc.value:', currLoc.value)
+
 })
 
 
 </script>
 
 <style lang="scss" scoped>
+@import '@/assets//styles/setup/mixins.scss';
+@import '@/assets/styles/setup/variables.scss';
+
+
 .info-window {
  display: grid;
  grid-auto-flow: row;
@@ -75,5 +79,31 @@ watchEffect(() => {
  transform: translate(-50%, -50%);
  background: #fff;
  padding: 0.5rem;
+ border-radius: 4px;
+ gap: 0.5rem;
+ max-width: 400px;
+
+ .info-actions {
+  justify-content: space-between;
+  grid-auto-flow: column;
+
+  button:first-child {
+   @include app-btn(5px, 5px)
+  }
+
+  button:last-child {
+   @include app-btn(5px, 5px, $clr2)
+  }
+
+ }
+
+ button {}
+
+ input {
+  border: none;
+  background: lightgray;
+  padding: 0.4rem;
+  border-radius: 2px;
+ }
 }
 </style>

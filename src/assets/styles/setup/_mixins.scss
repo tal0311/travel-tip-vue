@@ -129,9 +129,9 @@
 }
 
 // Type
-@mixin app-btn($padStartEnd: 5px, $pedInline: 5px) {
+@mixin app-btn($padStartEnd: 5px, $pedInline: 5px, $bgColor: #fdbf2d) {
   font-weight: 600;
-  background: $clr6;
+  background: $bgColor;
   border: none;
   color: $clr1;
   padding: $padStartEnd $pedInline;
