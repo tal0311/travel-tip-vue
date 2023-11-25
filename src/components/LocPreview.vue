@@ -5,7 +5,7 @@
    <h2>{{ props.loc.name }}</h2>
    <button class="icon right" data-title="Toggle bookmark" @click.stop="addToFav" v-html="$getSvg(getIcon)"></button>
   </header>
-  <img height="400px" :src="props.loc.imgUrl" alt="Location Image" />
+  <img height="400" :src="props.loc.imgUrl" alt="Location Image" />
   <LabelList :labels="props.loc.labels" />
   <div class="loc-actions">
    <button data-title="Remove location" class="icon remove-loc action-in-hover" @click.stop="removeLoc"
