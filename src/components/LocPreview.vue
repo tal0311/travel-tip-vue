@@ -2,9 +2,8 @@
 <template>
  <section @click="navigateTo(props.loc._id)" class="loc-preview">
   <header class="grid loc-header">
-   <!-- {{ getIcon }} -->
    <h2>{{ props.loc.name }}</h2>
-   <button class="icon" data-title="Toggle bookmark" @click.stop="addToFav" v-html="$getSvg(getIcon)"></button>
+   <button class="icon right" data-title="Toggle bookmark" @click.stop="addToFav" v-html="$getSvg(getIcon)"></button>
   </header>
   <img height="400px" :src="props.loc.imgUrl" alt="Location Image" />
   <LabelList :labels="props.loc.labels" />

@@ -82,6 +82,10 @@ i {
     left: 12px;
 }
 
+[data-title].right:hover::after {
+    left: -100%;
+}
+
 .icon {
     background: none;
     border: none;

@@ -2,13 +2,25 @@
  <header class="app-header grid">
   <UserPreview :user="user" />
   <div class="nav-container">
-   <button class="icon" @click="isOpen = !isOpen" v-html="$getSvg('menu')" data-title="Open menu"></button>
+   <button class="icon right" @click="isOpen = !isOpen" v-html="$getSvg('menu')" data-title="Open menu"></button>
    <nav class="app-nav" v-if="isOpen">
     <ul class="clean-list">
-     <li>home</li>
-     <li>about</li>
-     <li>favorites</li>
-     <li>contact</li>
+     <li>
+      <RouterLink to="/">Home
+      </RouterLink>
+     </li>
+     <li>
+      <RouterLink to="/about">About
+      </RouterLink>
+     </li>
+     <li>
+      <RouterLink to="/favorites">Favorites
+      </RouterLink>
+     </li>
+     <li>
+      <RouterLink to="/contact">Contact
+      </RouterLink>
+     </li>
     </ul>
    </nav>
   </div>
@@ -34,11 +46,9 @@ const isOpen = ref(false)
 
 .app-nav {
  position: absolute;
- transform: translate(-3.5rem, -0.5rem);
+ transform: translate(-5.5rem, -0.5rem);
  background: #fff;
  box-shadow: 0 0 2px 0px #c9c9c9;
  padding: 0.5rem;
-
-
 }
 </style>
