@@ -59,6 +59,7 @@ const getIcon = computed(() => {
 @import '@/assets/styles/setup/_variables.scss';
 
 .loc-preview {
+ cursor: pointer;
  border: 1px solid $clr8;
  padding: 10px;
  margin-bottom: 10px;

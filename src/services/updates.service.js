@@ -38,8 +38,8 @@ function createUpdates() {
     let updates = utilService.loadFromStorage(DB_KEY)
     if (!updates || !updates.length) {
         updates = [
-            { locId:'HiXADs', history:[createUpdate('weather'),createUpdate('note') ] },
-            { locId:'8lbM7u', history:[createUpdate('note'),createUpdate('note') ] }
+            { locId:'QovkC3', history:[createUpdate('weather'),createUpdate('note') ] },
+            { locId:'MDDddn', history:[createUpdate('note'),createUpdate('note') ] }
         ]
         utilService.saveToStorage(DB_KEY, updates)
     }

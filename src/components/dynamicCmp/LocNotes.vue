@@ -1,6 +1,6 @@
 <template>
  <section class="loc-notes">
-  <h2>LocNotes</h2>
+  <h2>Location Notes</h2>
   <p contenteditable="true" @blur="updateInfo">{{ props.info }}</p>
  </section>
 </template>
@@ -16,7 +16,7 @@ const props = defineProps({
 
 
 onBeforeMount(() => {
- console.log('props.info:', props.info)
+
 })
 
 function updateInfo(ev) {

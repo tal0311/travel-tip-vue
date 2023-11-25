@@ -1,21 +1,23 @@
 
 <template>
  <div class="loc-details" v-if="loc">
-  <h3>{{ loc.name }}</h3>
-  <img :src="loc.imgUrl" alt="Location Image" />
+  <h3 contenteditable="true" @blur="updateInfo">{{ loc.name }}</h3>
+  <img :src="loc.imgUrl" height="400" alt="Location Image" />
 
   <LabelList :labels="loc.labels" />
   <div>
-   <button @click="updateTabs('Notes')">Show Notes</button>
-   <button @click="updateTabs('Updates')">Show Updates</button>
-   <button @click="updateTabs('Weather')">Show Weather</button>
+   <div class="tab-list">
+
+    <button v-for="tab, idx in tabs" :key="idx" :class="['tab-button', { active: currentTab === tab }]"
+     @click="updateTabs(tab)">Show {{ tab }}</button>
+   </div>
 
 
-
-   <Notes v-if="currentTab === 'Notes'" @update-info="updateLoc" :info="loc.note" />
-   <Updates v-if="currentTab === 'Updates'" :info="updates" @update-info="updateLoc" />
-   <Weather v-if="currentTab === 'Weather'" :info="{ lat: loc.lat, lng: loc.lng }" />
-
+   <div class="dynamic-container">
+    <Notes v-if="currentTab === 'Notes'" @update-info="updateLoc" :info="loc.note" />
+    <Updates v-if="currentTab === 'Updates'" :info="LocUpdates" @update-info="updateLoc" />
+    <Weather v-if="currentTab === 'Weather'" :info="{ lat: loc.lat, lng: loc.lng }" />
+   </div>
 
 
   </div>
@@ -41,7 +43,7 @@ const locsStore = useLocsStore()
 const updatedStore = useUpdatedStore()
 
 const route = useRoute()
-// const tabs = ['Notes', 'Updates', 'Weather',]
+const tabs = ['Notes', 'Updates', 'Weather',]
 
 onBeforeMount(() => {
  loadLoc()
@@ -54,7 +56,7 @@ async function loadLoc() {
 }
 
 
-const updates = computed(() => updatedStore.getUpdates)
+const LocUpdates = computed(() => updatedStore.getUpdates?.history)
 async function loadUpdates() {
  updateLoc.value = await updatedStore.loadUpdates(route.params.locId)
 }
@@ -65,15 +67,11 @@ const currentTab = ref('Notes')
 
 watchEffect(() =>
  console.log('currentTab:', currentTab.value),
- console.log('updates:', updates.value)
+ console.log('updates:', LocUpdates.value)
 )
 
 function updateTabs(tab) {
  currentTab.value = tab
-}
-
-async function AddNewUpdate() {
-
 }
 
 async function updateLoc({ key, value }) {
@@ -84,13 +82,15 @@ async function updateLoc({ key, value }) {
  }
 
  loc.value = await locsStore.updateLoc(locToUpdate)
-
-
-
-
-
 }
 
+function updateInfo(ev) {
+ ev.target.innerText
+ console.log('text:', ev.target.innerText)
+ // emit('update-Info', { key: 'name', value: ev.target.innerText })
+
+ updateLoc({ key: 'name', value: ev.target.innerText })
+}
 
 
 
@@ -98,17 +98,6 @@ async function updateLoc({ key, value }) {
 </script>
 
 <style scoped lang="scss">
-.demo {
- font-family: sans-serif;
- border: 1px solid #eee;
- border-radius: 2px;
- padding: 20px 30px;
- margin-top: 1em;
- margin-bottom: 40px;
- user-select: none;
- overflow-x: auto;
-}
-
 .tab-button {
  padding: 6px 10px;
  border-top-left-radius: 3px;
@@ -128,8 +117,8 @@ async function updateLoc({ key, value }) {
  background: #e0e0e0;
 }
 
-.demo-tab {
- border: 1px solid #ccc;
- padding: 10px;
+.dynamic-container {
+ border: 1px solid lightgray;
+ padding: 0.5rem;
 }
 </style>

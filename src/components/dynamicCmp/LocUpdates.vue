@@ -1,7 +1,7 @@
 <template>
  <section class="loc-updates">
-  <h2>updates</h2>
-  <div v-for="update, idx in props.info.history" :key="idx">
+  <h2>Updates</h2>
+  <div v-for="update, idx in props.info" :key="idx">
 
    <p>{{ getUpdateDesc(update.type) }}</p>
    <p>{{ getFormattedTime(update.updatedAt) }}</p>
@@ -26,12 +26,6 @@ function getUpdateDesc(type) {
 function getFormattedTime(ts) {
  return ts
 }
-
-
-onBeforeMount(() => {
- console.log('props.info:', props.info)
-
-})
 
 </script>
 

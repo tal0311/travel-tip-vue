@@ -10,8 +10,7 @@ body {
     margin: 0;
     height: 100dvh;
     height: 100vh;
-
-    // overflow: hidden;
+    overflow-x: hidden;
 }
 
 h1,
@@ -24,20 +23,12 @@ h6 {
     margin: 0;
 }
 
-h1 {
-}
-
-h2 {
-}
-
-h3 {
-}
-
 img {
     width: 100%;
 }
 
 p {
+    margin: 0;
 }
 
 .btn {

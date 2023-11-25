@@ -34,7 +34,7 @@ const isOpen = ref(false)
 
 .app-nav {
  position: absolute;
- transform: translate(-2.5rem, -1.2rem);
+ transform: translate(-3.5rem, -0.5rem);
  background: #fff;
  box-shadow: 0 0 2px 0px #c9c9c9;
  padding: 0.5rem;

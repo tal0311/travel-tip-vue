@@ -1,6 +1,6 @@
 <template>
  <section class="loc-weather" v-if="weatherData">
-  <h2>LocWeather</h2>
+  <h2>Location Weather</h2>
   <h4>Location name: {{ weatherData.name }}</h4>
   <p>Temperature {{ weatherData.temp }} - {{ weatherData.dec }}</p>
   <p>Humidity: {{ weatherData.humidity }}</p>
