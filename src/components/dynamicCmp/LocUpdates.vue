@@ -1,15 +1,18 @@
 <template>
  <section class="loc-updates">
   <h2>Updates</h2>
-  <div v-for="update, idx in props.info" :key="idx">
-
-   <p>{{ getUpdateDesc(update.type) }}</p>
-   <p>{{ getFormattedTime(update.updatedAt) }}</p>
-  </div>
+  <ul v-for="update, idx in props.info" :key="idx">
+   <li>
+    <p>{{ getUpdateDesc(update.type) }}</p>
+    <p><span>{{ getFormattedTime(update.updatedAt).date }}</span> | <span> {{ getFormattedTime(update.updatedAt).time }}
+     </span></p>
+   </li>
+  </ul>
  </section>
 </template>
 
 <script setup>
+import { utilService } from '@/services/util.service.js'
 import { computed, onBeforeMount, } from 'vue'
 import { updatedService } from '@/services/updates.service';
 
@@ -24,7 +27,7 @@ function getUpdateDesc(type) {
 }
 
 function getFormattedTime(ts) {
- return ts
+ return utilService.getFormattedTime(ts)
 }
 
 </script>

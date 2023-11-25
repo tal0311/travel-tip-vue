@@ -23,11 +23,15 @@
   </div>
 
  </div>
+
+ <AppLoader v-else />
 </template>
 
 <script setup>
 
 //TODO: DYNAMIC CMP
+
+import AppLoader from '@/components/AppLoader.vue'
 import Updates from '@/components/dynamicCmp/LocUpdates.vue'
 import Notes from '@/components/dynamicCmp/LocNotes.vue'
 import Weather from '@/components/dynamicCmp/LocWeather.vue'
