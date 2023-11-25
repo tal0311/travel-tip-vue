@@ -49,7 +49,6 @@ function getFormattedDate(ts) {
 function getFormattedTime(ts) {
     const time = new Date(ts).toLocaleTimeString()
     const date = new Date(ts).toDateString()
-    console.debug('♠️ ~ file: util.service.js:51 ~ getFormattedTime ~ date:', date)
     return { date, time }
 }
 function getVidFormattedDate(ts) {
