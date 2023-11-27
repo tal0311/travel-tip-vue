@@ -14,7 +14,7 @@
 
 <script setup>
 import { eventBus } from '@/services/event-bus.service.js'
-import { computed, onUnmounted, ref, onBeforeMount } from 'vue'
+import { onUnmounted, ref, onBeforeMount } from 'vue'
 
 const msg = ref(null)
 const unsubscribe = ref(null)

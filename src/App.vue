@@ -2,20 +2,12 @@
 <template>
   <div class="app-container main-layout">
     <AppHeader />
-    <!-- <nav class="home-nav">
-      <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/about">About</RouterLink>
-      <RouterLink to="/favorites">Favorites</RouterLink>
-      <RouterLink to="/loc/123">Location details</RouterLink>
-    </nav> -->
     <RouterView />
     <UserMsg />
   </div>
 </template>
 
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import HelloWorld from './components/HelloWorld.vue'
 import UserMsg from '@/components/UserMsg.vue';
 import AppHeader from './components/AppHeader.vue';
 </script>

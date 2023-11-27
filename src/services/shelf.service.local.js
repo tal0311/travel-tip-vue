@@ -2,7 +2,6 @@
 import { storageService } from './async-storage.service.js'
 import { utilService } from './util.service.js'
 import { userService } from './user.service.js'
-import shelves from './../../data/shelf.json' assert {type: 'json'}
 import { httpService } from './http.service.js'
 import axios from 'axios'
 

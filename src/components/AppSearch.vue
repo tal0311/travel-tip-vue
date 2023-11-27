@@ -35,7 +35,7 @@ const filter = ref({
 const emit = defineEmits(['search'])
 
 function handleForm() {
- const updatedFilter = { ...filter.txt, }
+ const updatedFilter = { ...filter.value.txt, }
  Object.keys(filter.value).forEach(key => {
   if (!filter.value[key]) delete filter.value[key]
  })

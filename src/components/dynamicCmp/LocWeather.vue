@@ -10,6 +10,7 @@
 
 <script setup>
 import { weatherService } from '@/services/weather.service';
+import { updateService } from '@/services/updates.service'
 import { ref, onBeforeMount } from 'vue'
 const props = defineProps({
  info: {
@@ -17,9 +18,12 @@ const props = defineProps({
  },
 })
 
+const emit = defineEmits(['update-info'])
+
 const weatherData = ref(null)
 async function getWeather() {
  weatherData.value = await weatherService.getWeatherByLocation(props.info)
+ emit('update-info', { key: 'weather', value: null })
 
 }
 

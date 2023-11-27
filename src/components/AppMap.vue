@@ -23,7 +23,7 @@
 </template>
 
 <script setup>
-import { onBeforeMount, ref, computed, watchEffect } from "vue";
+import { ref, computed, watchEffect } from "vue";
 import { locService } from '@/services/loc.service.js'
 import { GoogleMap, Marker } from "vue3-google-map";
 import { useLocsStore } from '@/stores/locsStore'
@@ -33,7 +33,6 @@ const MAP_KEY = import.meta.env.VITE_MAP_API_KEY
 
 const infoWindowPosition = ref(null)
 const showInfoWindow = ref(false)
-const markerOptions = { position: center, label: "L", title: "LADY LIBERTY" };
 
 function handleMapClick(ev) {
  const { lat, lng } = ev.latLng
