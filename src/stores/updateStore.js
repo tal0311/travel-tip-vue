@@ -15,8 +15,7 @@ export const useUpdatedStore = defineStore('update', () => {
 
   async function addUpdate(type) {
     const updated = await updateService.addUpdate(type, updatesByLoc.value._id)
-    console.debug('♠️ ~ file: updateStore.js:23 ~ addUpdate ~ updated:', updated)
-    updatesByLoc.value.history.push(updated)
+   updatesByLoc.value.history.push(updated)
   }
 
 

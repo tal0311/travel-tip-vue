@@ -47,11 +47,6 @@ function handleForm() {
  emit('search', { ...updatedFilter })
 }
 
-watchEffect(() => {
- console.log(filter.value)
-})
-
-
 
 </script>
 

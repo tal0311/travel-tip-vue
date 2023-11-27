@@ -21,7 +21,6 @@ onBeforeMount(() => {
 
 function updateInfo(ev) {
  ev.target.innerText
- console.log('text:', ev.target.innerText)
  emit('update-Info', { key: 'note', value: ev.target.innerText })
 }
 

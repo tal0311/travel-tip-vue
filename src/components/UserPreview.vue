@@ -17,7 +17,6 @@ const props = defineProps({
 })
 
 function getInitials(str) {
- console.log(str);
  const initials = str.split(' ').map(s =>
   s[0].charAt(0).toUpperCase()).join('')
  return initials

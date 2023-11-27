@@ -47,7 +47,6 @@ const selectedPos = ref(locService.getEmptyLoc())
 function handleAddPos() {
  selectedPos.value
  showInfoWindow.value = false
- console.log(selectedPos.value);
  emit('add-location', { ...selectedPos.value })
 }
 
