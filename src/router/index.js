@@ -2,7 +2,6 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import { useLocsStore } from '@/stores/locsStore'
 
-
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
@@ -21,17 +20,17 @@ const router = createRouter({
       path: '/favorites',
       name: 'favorite-locations',
       component: () => import('@/views/FavoritesView.vue'),
-     beforeEnter: async(to, from, next) => {
-      const answer = confirm('You are about to enter the Favorite locations area')
-      const locsStore= useLocsStore()
-      if (answer) {
-       await locsStore.setFilter({isFav:true})
-       await locsStore.loadLocs()
-       next()
-      } else {
-       next('/')
-       }
-     }
+      beforeEnter: async (to, from, next) => {
+        const answer = confirm('You are about to enter the Favorite locations area')
+        const locsStore = useLocsStore()
+        if (answer) {
+          await locsStore.setFilter({ isFav: true })
+          await locsStore.loadLocs()
+          next()
+        } else {
+          next('/')
+        }
+      }
     },
     {
       path: '/about',

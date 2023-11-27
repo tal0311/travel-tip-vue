@@ -1,13 +1,11 @@
-
-
 /**
  * user location
- * @returns {Promise} position 
+ * @returns {Promise} position
  */
 function position() {
   return new Promise((resolve, reject) => {
-    navigator.geolocation.getCurrentPosition(resolve, reject);
-  });
+    navigator.geolocation.getCurrentPosition(resolve, reject)
+  })
 }
 
 /**
@@ -25,24 +23,23 @@ async function getPosition() {
   } catch (error) {
     console.info('[could not get position]:', error)
   }
-
 }
-// TODO: add google maps search 
+// TODO: add google maps search
 
 function getAddressCoords(address) {
   const baseUrl = 'https://maps.googleapis.com/maps/api/geocode/json?address='
   const params = `${address}&language=en&key=${API_KEY}`
 
   return fetch(baseUrl + params)
-    .then(response => response.json())
-    .then(res => res.results[0])
-    .then(data => {
+    .then((response) => response.json())
+    .then((res) => res.results[0])
+    .then((data) => {
       return {
         pos: {
           lat: data.geometry.location.lat,
-          lng: data.geometry.location.lng,
+          lng: data.geometry.location.lng
         },
-        locName: data['address_components'][0]['long_name'],
+        locName: data['address_components'][0]['long_name']
       }
     })
 }
@@ -51,23 +48,19 @@ function getAddressCoords(address) {
 // parameter when you first load the API. For example:
 // <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_API_KEY&libraries=places">
 function searchLocations() {
-  const card = document.getElementById("pac-card");
-  const input = document.getElementById("pac-input");
-  const biasInputElement = document.getElementById("use-location-bias");
-  const strictBoundsInputElement =
-    document.getElementById("use-strict-bounds");
+  const card = document.getElementById('pac-card')
+  const input = document.getElementById('pac-input')
+  const biasInputElement = document.getElementById('use-location-bias')
+  const strictBoundsInputElement = document.getElementById('use-strict-bounds')
   const options = {
-    fields: ["formatted_address", "geometry", "name"],
+    fields: ['formatted_address', 'geometry', 'name'],
     strictBounds: false,
-    types: ["establishment"],
-  };
+    types: ['establishment']
+  }
 
-  map.controls[google.maps.ControlPosition.TOP_LEFT].push(card);
+  map.controls[google.maps.ControlPosition.TOP_LEFT].push(card)
 
-  const autocomplete = new google.maps.places.Autocomplete(
-    input,
-    options
-  );
+  const autocomplete = new google.maps.places.Autocomplete(input, options)
 }
 
 export const locationService = {

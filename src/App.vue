@@ -1,4 +1,3 @@
-
 <template>
   <div class="app-container main-layout">
     <AppHeader />
@@ -8,15 +7,15 @@
 </template>
 
 <script setup>
-import UserMsg from '@/components/UserMsg.vue';
-import AppHeader from './components/AppHeader.vue';
+import UserMsg from '@/components/UserMsg.vue'
+import AppHeader from './components/AppHeader.vue'
 </script>
 
-<style >
+<style>
 @import '@/assets/styles/setup/_variables.scss';
 
 .app-container {
-  margin-top: 1rem
+  margin-top: 1rem;
 }
 
 /* header {

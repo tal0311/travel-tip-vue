@@ -1,4 +1,3 @@
-
 <template>
   <div class="loc-details" v-if="loc">
     <h3 contenteditable="true" @blur="updateInfo">{{ loc.name }}</h3>
@@ -7,28 +6,32 @@
     <LabelList :labels="loc.labels" />
     <div>
       <div class="tab-list">
-
-        <button v-for="tab, idx in tabs" :key="idx" :class="['tab-button', { active: currentTab === tab }]"
-          @click="updateTabs(tab)">Show {{ tab }}</button>
+        <button
+          v-for="(tab, idx) in tabs"
+          :key="idx"
+          :class="['tab-button', { active: currentTab === tab }]"
+          @click="updateTabs(tab)"
+        >
+          Show {{ tab }}
+        </button>
       </div>
-
 
       <div class="dynamic-container">
         <Notes v-if="currentTab === 'Notes'" @update-info="updateLoc" :info="loc.note" />
         <Updates v-if="currentTab === 'Updates'" :info="LocUpdates" @update-info="updateLoc" />
-        <Weather @update-info="updateLoc" v-if="currentTab === 'Weather'" :info="{ lat: loc.lat, lng: loc.lng }" />
+        <Weather
+          @update-info="updateLoc"
+          v-if="currentTab === 'Weather'"
+          :info="{ lat: loc.lat, lng: loc.lng }"
+        />
       </div>
-
-
     </div>
-
   </div>
 
   <AppLoader v-else />
 </template>
 
 <script setup>
-
 //TODO: DYNAMIC CMP
 
 import AppLoader from '@/components/AppLoader.vue'
@@ -41,14 +44,14 @@ import { useRoute } from 'vue-router'
 import { computed, onBeforeMount, ref, watchEffect } from 'vue'
 import { useLocsStore } from '@/stores/locsStore'
 import { useUpdatedStore } from '@/stores/UpdateStore'
-import { locService } from '@/services/loc.service';
+import { locService } from '@/services/loc.service'
 import { updateService } from '../services/updates.service'
 
 const locsStore = useLocsStore()
 const updatedStore = useUpdatedStore()
 
 const route = useRoute()
-const tabs = ['Notes', 'Updates', 'Weather',]
+const tabs = ['Notes', 'Updates', 'Weather']
 
 onBeforeMount(() => {
   loadLoc()
@@ -59,7 +62,6 @@ const loc = ref(null)
 async function loadLoc() {
   loc.value = await locService.getLocById(route.params.locId)
 }
-
 
 const LocUpdates = computed(() => updatedStore.getUpdates)
 async function loadUpdates() {
@@ -75,9 +77,8 @@ async function updateLoc({ key, value }) {
   const locToUpdate = {
     _id: loc.value._id,
     key,
-    value,
+    value
   }
-
 
   if (key === 'weather') {
     await updatedStore.addUpdate(locToUpdate)
@@ -91,9 +92,6 @@ function updateInfo(ev) {
   ev.target.innerText
   updateLoc({ key: 'name', value: ev.target.innerText })
 }
-
-
-
 </script>
 
 <style scoped lang="scss">

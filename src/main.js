@@ -3,7 +3,7 @@ import './assets/styles/styles.scss'
 import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 
-import {svgPlugin} from '@/plugins'
+import { svgPlugin } from '@/plugins'
 
 import App from './App.vue'
 import router from './router'

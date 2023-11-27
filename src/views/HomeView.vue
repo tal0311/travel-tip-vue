@@ -1,5 +1,3 @@
-
-
 <template>
   <AppSearch @search="filterLocs" />
   <details :title="title">
@@ -7,26 +5,29 @@
     <AppMap @add-location="addPlace" />
   </details>
 
-  <LocList :locs="locs" header="Your locations" @remove-loc="removeLoc" @favorite="toggleFav" @onPenToLoc="penToLoc" />
+  <LocList
+    :locs="locs"
+    header="Your locations"
+    @remove-loc="removeLoc"
+    @favorite="toggleFav"
+    @onPenToLoc="penToLoc"
+  />
 </template>
 
 <script setup>
-
-
 import { computed, onBeforeMount, ref } from 'vue'
 import { useLocsStore } from '@/stores/locsStore'
-import AppSearch from "@/components/AppSearch.vue";
-import AppMap from "@/components/AppMap.vue";
-import LocList from "@/components/LocList.vue";
+import AppSearch from '@/components/AppSearch.vue'
+import AppMap from '@/components/AppMap.vue'
+import LocList from '@/components/LocList.vue'
 
-
-const locsStore = useLocsStore();
+const locsStore = useLocsStore()
 onBeforeMount(() => {
   loadLocs()
 })
 const locs = computed(() => locsStore.getLocs)
 async function loadLocs() {
-  await locsStore.loadLocs();
+  await locsStore.loadLocs()
 }
 
 const title = ref('Tap to open')
@@ -51,10 +52,6 @@ function toggleFav(locId) {
 function penToLoc(loc) {
   locsStore.setCurrLoc(loc)
 }
-
-
-
-
 </script>
 <style lang="scss" scoped>
 details {
