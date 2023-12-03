@@ -5,7 +5,7 @@
       <button class="icon right" @click="isOpen = !isOpen" v-html="$getSvg('menu')" data-title="Open menu"></button>
       <nav class="app-nav" v-if="isOpen">
         <ul class="clean-list">
-          <li v-for="route in routes" :key="route.path">
+          <li v-for="route, idx in routes" :key="idx">
             <RouterLink :to="route.path" @click="isOpen = false">
               {{ route.path === '/' ? 'Home' : getRouteName(route.path.slice(1)) }}
             </RouterLink>

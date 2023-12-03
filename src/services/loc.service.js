@@ -14,6 +14,8 @@ const LOCS_KEY = 'locationsDB'
 createLocations()
 
 async function getLocs(filterBy) {
+  console.log(filterBy);
+  // debugger
   let locs = await storageService.query(LOCS_KEY)
 
   if (filterBy.isFav) {

@@ -1,22 +1,14 @@
 <template>
   <section class="app-search">
     <form @submit.prevent="handleForm" class="grid">
-      <input
-        type="search"
-        v-model="filter.txt"
-        @search="onUserSearch"
-        placeholder="Enter location name..."
-      />
+      <input type="search" v-model="filter.txt" @search="onUserSearch" placeholder="Enter location name..." />
       <div class="labels-container grid">
-        <label class="grid" v-for="(item, idx) in filterItems" :key="idx" :for="item.name">
-          <span v-html="$getSvg(item.icon)"></span>
-          <input
-            class="input-checkbox"
-            v-model="filter[item.name]"
-            type="checkbox"
-            :id="item.name"
-            :name="item.name"
-          />
+        <label v-for="(item, idx) in filterItems" :key="idx" :for="item.name"
+          :class="['grid', item.name, item.checked ? 'checked' : '']">
+
+          <span @click="selectItem(idx)" v-html="$getSvg(item.icon)"></span>
+
+          <input class="input-checkbox" v-model="filter[item.name]" type="checkbox" :id="item.name" :name="item.name" />
         </label>
       </div>
     </form>
@@ -24,15 +16,15 @@
 </template>
 
 <script setup>
-import { ref, watchEffect } from 'vue'
+import { h, ref, watch } from 'vue'
 
-const filterItems = [
-  { name: 'forest', label: 'Forest', icon: 'forest' },
-  { name: 'hiking', label: 'Hiking', icon: 'sign' },
-  { name: 'beach', label: 'Beach', icon: 'beach' },
-  { name: 'boat-trip', label: 'Boat Trip', icon: 'sailing' },
-  { name: 'camping', label: 'camping', icon: 'camping' }
-]
+const filterItems = ref([
+  { name: 'forest', label: 'Forest', icon: 'forest', checked: false },
+  { name: 'hiking', label: 'Hiking', icon: 'sign', checked: false },
+  { name: 'beach', label: 'Beach', icon: 'beach', checked: false },
+  { name: 'boat-trip', label: 'Boat Trip', icon: 'sailing', checked: false },
+  { name: 'camping', label: 'camping', icon: 'camping', checked: false }
+])
 
 const filter = ref({
   txt: '',
@@ -46,17 +38,25 @@ const filter = ref({
 const emit = defineEmits(['search'])
 
 function handleForm() {
-  const updatedFilter = { ...filter.value.txt }
+  const updatedFilter = { txt: filter.value.txt }
+
   Object.keys(filter.value).forEach((key) => {
-    if (!filter.value[key]) delete filter.value[key]
+    if (!filter.value[key] || key === 'txt') delete filter.value[key]
   })
-  updatedFilter.txt = filter.value.txt
   updatedFilter.type = Object.keys(filter.value)
     .filter((key) => filter.value[key])
     .map((key) => key)
 
   emit('search', { ...updatedFilter })
 }
+
+function selectItem(idx) {
+  filterItems.value[idx].checked = !filterItems.value[idx].checked
+  filter.value[filterItems.value[idx].name] = filterItems.value[idx].checked
+  handleForm()
+}
+
+
 </script>
 
 <style lang="scss">
@@ -93,22 +93,34 @@ function handleForm() {
   label {
     grid-auto-flow: column;
     justify-content: start;
-    background: #f1f0f0e8;
+    background-color: #f1f0f0e8;
     border-radius: 50%;
     padding: 0.2rem 0.3rem 0.1rem;
     place-items: center;
 
+    &.forest.checked {
+      background: #8df98de8;
+    }
+
+    &.hiking.checked {
+      background: #f2f29be8;
+    }
+
+    &.beach.checked {
+      background: #f88c8ce8;
+    }
+
+    &.boat-trip.checked {
+      background: #9f9ff5e8;
+    }
+
+    &.camping.checked {
+      background: #ff8bf7e8;
+    }
+
     input {
       display: none;
 
-      &:checked {
-        &::after {
-          content: '*';
-          display: inline-block;
-          width: 12px;
-          height: 12px;
-        }
-      }
     }
   }
 }
