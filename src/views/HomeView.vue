@@ -5,11 +5,17 @@
     <AppMap @add-location="addPlace" />
   </details>
 
-  <LocList :locs="locs" header="Your locations" @remove-loc="removeLoc" @favorite="toggleFav" @onPenToLoc="penToLoc" />
+  <LocList
+    :locs="locs"
+    header="Your locations"
+    @remove-loc="removeLoc"
+    @favorite="toggleFav"
+    @onPenToLoc="penToLoc"
+  />
 </template>
 
 <script setup>
-import { computed, onBeforeMount, ref, onMounted, watchEffect } from 'vue'
+import { computed, onBeforeMount, ref } from 'vue'
 import { useLocsStore } from '@/stores/locsStore'
 import AppSearch from '@/components/AppSearch.vue'
 import AppMap from '@/components/AppMap.vue'

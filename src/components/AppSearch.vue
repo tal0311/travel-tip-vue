@@ -1,14 +1,28 @@
 <template>
   <section class="app-search">
     <form @submit.prevent="handleForm" class="grid">
-      <input type="search" v-model="filter.txt" @search="onUserSearch" placeholder="Enter location name..." />
+      <input
+        type="search"
+        v-model="filter.txt"
+        @search="onUserSearch"
+        placeholder="Enter location name..."
+      />
       <div class="labels-container grid">
-        <label v-for="(item, idx) in filterItems" :key="idx" :for="item.name"
-          :class="['grid', item.name, item.checked ? 'checked' : '']">
-
+        <label
+          v-for="(item, idx) in filterItems"
+          :key="idx"
+          :for="item.name"
+          :class="['grid', item.name, item.checked ? 'checked' : '']"
+        >
           <span @click="selectItem(idx)" v-html="$getSvg(item.icon)"></span>
 
-          <input class="input-checkbox" v-model="filter[item.name]" type="checkbox" :id="item.name" :name="item.name" />
+          <input
+            class="input-checkbox"
+            v-model="filter[item.name]"
+            type="checkbox"
+            :id="item.name"
+            :name="item.name"
+          />
         </label>
       </div>
     </form>
@@ -55,8 +69,6 @@ function selectItem(idx) {
   filter.value[filterItems.value[idx].name] = filterItems.value[idx].checked
   handleForm()
 }
-
-
 </script>
 
 <style lang="scss">
@@ -120,7 +132,6 @@ function selectItem(idx) {
 
     input {
       display: none;
-
     }
   }
 }

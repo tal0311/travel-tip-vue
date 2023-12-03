@@ -2,10 +2,15 @@
   <header class="app-header grid">
     <UserPreview :user="user" />
     <div class="nav-container">
-      <button class="icon right" @click="isOpen = !isOpen" v-html="$getSvg('menu')" data-title="Open menu"></button>
+      <button
+        class="icon right"
+        @click="isOpen = !isOpen"
+        v-html="$getSvg('menu')"
+        data-title="Open menu"
+      ></button>
       <nav class="app-nav" v-if="isOpen">
         <ul class="clean-list">
-          <li v-for="route, idx in routes" :key="idx">
+          <li v-for="(route, idx) in routes" :key="idx">
             <RouterLink :to="route.path" @click="isOpen = false">
               {{ route.path === '/' ? 'Home' : getRouteName(route.path.slice(1)) }}
             </RouterLink>
@@ -22,12 +27,7 @@ import { ref } from 'vue'
 const user = ref({ username: 'Tal Amit', email: 'tal.Amit0311@gmail.com', color: 'steelblue' })
 
 const isOpen = ref(false)
-const routes = [
-  { path: '/' },
-  { path: '/about' },
-  { path: '/favorites' },
-  { path: '/contact' }
-]
+const routes = [{ path: '/' }, { path: '/about' }, { path: '/favorites' }, { path: '/contact' }]
 
 function getRouteName(path) {
   return path

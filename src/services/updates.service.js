@@ -43,7 +43,7 @@ function getUpdateByType(type) {
 function createUpdates() {
   let updates = utilService.loadFromStorage(DB_KEY)
   if (!updates || !updates.length) {
-    const locs= utilService.loadFromStorage('locationsDB')
+    const locs = utilService.loadFromStorage('locationsDB')
     updates = [
       { _id: locs[0]._id, history: [createUpdate('weather'), createUpdate('note')] },
       { _id: locs[1]._id, history: [createUpdate('note'), createUpdate('note')] }
