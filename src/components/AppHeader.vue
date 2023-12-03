@@ -2,25 +2,13 @@
   <header class="app-header grid">
     <UserPreview :user="user" />
     <div class="nav-container">
-      <button
-        class="icon right"
-        @click="isOpen = !isOpen"
-        v-html="$getSvg('menu')"
-        data-title="Open menu"
-      ></button>
+      <button class="icon right" @click="isOpen = !isOpen" v-html="$getSvg('menu')" data-title="Open menu"></button>
       <nav class="app-nav" v-if="isOpen">
         <ul class="clean-list">
-          <li>
-            <RouterLink to="/">Home </RouterLink>
-          </li>
-          <li>
-            <RouterLink to="/about">About </RouterLink>
-          </li>
-          <li>
-            <RouterLink to="/favorites">Favorites </RouterLink>
-          </li>
-          <li>
-            <RouterLink to="/contact">Contact </RouterLink>
+          <li v-for="route in routes" :key="route.path">
+            <RouterLink :to="route.path" @click="isOpen = false">
+              {{ route.path === '/' ? 'Home' : getRouteName(route.path.slice(1)) }}
+            </RouterLink>
           </li>
         </ul>
       </nav>
@@ -34,6 +22,19 @@ import { ref } from 'vue'
 const user = ref({ username: 'Tal Amit', email: 'tal.Amit0311@gmail.com', color: 'steelblue' })
 
 const isOpen = ref(false)
+const routes = [
+  { path: '/' },
+  { path: '/about' },
+  { path: '/favorites' },
+  { path: '/contact' }
+]
+
+function getRouteName(path) {
+  return path
+    .split(' ')
+    .map((word) => word[0].toUpperCase() + word.slice(1))
+    .join(' ')
+}
 </script>
 
 <style lang="scss" scoped>

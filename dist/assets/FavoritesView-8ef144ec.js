@@ -1,1 +1,0 @@
-import{h as a,e as c,k as t,o as n,n as r,q as l}from"./index-b57c3b64.js";const f={__name:"FavoritesView",setup(u){const o=a();c(()=>{e()});const s=t(()=>o.getLocs);async function e(){await o.loadLocs()}return(_,i)=>(n(),r(l,{locs:s.value,header:"Favorite locations"},null,8,["locs"]))}};export{f as default};

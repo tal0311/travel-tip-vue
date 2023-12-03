@@ -1,21 +1,15 @@
 <template>
   <AppSearch @search="filterLocs" />
-  <details :title="title">
+  <details ref="mapRef" :title="title">
     <summary>Map</summary>
     <AppMap @add-location="addPlace" />
   </details>
 
-  <LocList
-    :locs="locs"
-    header="Your locations"
-    @remove-loc="removeLoc"
-    @favorite="toggleFav"
-    @onPenToLoc="penToLoc"
-  />
+  <LocList :locs="locs" header="Your locations" @remove-loc="removeLoc" @favorite="toggleFav" @onPenToLoc="penToLoc" />
 </template>
 
 <script setup>
-import { computed, onBeforeMount, ref } from 'vue'
+import { computed, onBeforeMount, ref, onMounted, watchEffect } from 'vue'
 import { useLocsStore } from '@/stores/locsStore'
 import AppSearch from '@/components/AppSearch.vue'
 import AppMap from '@/components/AppMap.vue'
@@ -31,11 +25,21 @@ async function loadLocs() {
 }
 
 const title = ref('Tap to open')
+const mapRef = ref(null)
 
 function filterLocs(filterBy) {
   locsStore.filterBy = filterBy
   loadLocs()
 }
+
+// TODO: add composable for this
+onBeforeMount(() => {
+  if (window.innerWidth < 600) {
+    title.value = 'Tap to open'
+  } else {
+    title.value = 'Click to open'
+  }
+})
 
 async function addPlace(locToAdd) {
   await locsStore.addLoc(locToAdd)
