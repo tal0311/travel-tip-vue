@@ -7,7 +7,8 @@ export const locService = {
   removeLoc,
   getLocById,
   createLoc,
-  getEmptyLoc
+  getEmptyLoc,
+  updateLocLabel
 }
 
 const LOCS_KEY = 'locationsDB'
@@ -42,6 +43,12 @@ async function removeLoc(locId) {
 
 async function getLocById(locId) {
   return await storageService.get(LOCS_KEY, locId)
+}
+
+async function updateLocLabel(locId, label) {
+  const locToUpdate = await getLocById(locId)
+  locToUpdate.labels.includes(label) ? locToUpdate.labels.splice(locToUpdate.labels.indexOf(label), 1) : locToUpdate.labels.push(label)
+  return await save(locToUpdate)
 }
 
 function createLoc(name, lat, lng, weather, createdAt, updatedAt) {

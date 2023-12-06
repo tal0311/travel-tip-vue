@@ -62,6 +62,15 @@ export const useLocsStore = defineStore('loc', () => {
     return updatedLoc
   }
 
+  async function updateLocLabel({ _id: locId, label }) {
+    console.log('locId:', locId)
+    const locToUpdate = await locService.updateLocLabel(locId, label)
+    const idx = locs.value.findIndex((currLoc) => currLoc._id === locToUpdate._id)
+    locs.value.splice(idx, 1, locToUpdate)
+    return locToUpdate
+
+  }
+
   function setCurrLoc(loc) {
     currLoc.value = loc
   }
@@ -75,6 +84,7 @@ export const useLocsStore = defineStore('loc', () => {
     updateLoc,
     filterBy,
     setCurrLoc,
-    getCurrLoc
+    getCurrLoc,
+    updateLocLabel
   }
 })

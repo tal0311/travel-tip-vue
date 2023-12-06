@@ -2,28 +2,15 @@
   <section @click="navigateTo(props.loc._id)" class="loc-preview">
     <header class="grid loc-header">
       <h2>{{ props.loc.name }}</h2>
-      <button
-        class="icon right"
-        data-title="Toggle bookmark"
-        @click.stop="addToFav"
-        v-html="$getSvg(getIcon)"
-      ></button>
+      <button class="icon right" data-title="Toggle bookmark" @click.stop="addToFav" v-html="$getSvg(getIcon)"></button>
     </header>
     <img height="400" :src="props.loc.imgUrl" alt="Location Image" />
-    <LabelList :labels="props.loc.labels" />
+    <LabelList :labels="props.loc.labels" isPreview="true" />
     <div class="loc-actions">
-      <button
-        data-title="Remove location"
-        class="icon remove-loc action-in-hover"
-        @click.stop="removeLoc"
-        v-html="$getSvg('remove')"
-      ></button>
-      <button
-        data-title="Pen map to location"
-        class="icon pen-loc action-in-hover"
-        @click.stop="penToLocation"
-        v-html="$getSvg('loc')"
-      ></button>
+      <button data-title="Remove location" class="icon remove-loc action-in-hover" @click.stop="removeLoc"
+        v-html="$getSvg('remove')"></button>
+      <button data-title="Pen map to location" class="icon pen-loc action-in-hover" @click.stop="penToLocation"
+        v-html="$getSvg('loc')"></button>
     </div>
   </section>
 </template>
@@ -69,8 +56,8 @@ const getIcon = computed(() => {
 .loc-preview {
   cursor: pointer;
   border: 1px solid $clr8;
-  padding: 10px;
-  margin-bottom: 10px;
+  padding: 0.8rem;
+  margin-bottom: 0.8rem;
   text-decoration: none;
 
   .loc-header {
@@ -79,13 +66,13 @@ const getIcon = computed(() => {
   }
 
   h2 {
-    font-size: 18px;
-    margin-bottom: 5px;
+    font-size: 1.2rem;
+    margin-bottom: 0.2rem;
   }
 
   img {
     width: 100%;
-    height: 200px;
+    height: 12.5rem;
     object-fit: cover;
   }
 

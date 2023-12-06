@@ -1,18 +1,28 @@
 <template>
-  <ul class="label-list clean-list grid">
-    <li v-for="(label, idx) in props.labels" :key="idx">
-      <span v-html="$getSvg(getLabel(label))"></span>
+  <ul :class="['label-list clean-list grid', $attrs.isPreview ? 'is-preview' : 'blur-bg']">
+
+    <li v-for="( label, idx ) in   labelList  " :key="idx" @click="updateLabel(label)">
+      <span :class="isLocLabel(label)" v-html="$getSvg(getLabel(label))"></span>
     </li>
   </ul>
 </template>
 
 <script setup>
+import { ref, computed } from "vue"
+
 const props = defineProps({
   labels: {
     type: Array
   }
 })
 
+const emit = defineEmits(['update-labels'])
+
+const labelList = ref(['beach', 'hiking', 'camping', 'boat-trip', 'forest'])
+
+function isLocLabel(label) {
+  return props?.labels?.includes(label) ? 'g-icon regular' : 'g-icon bold'
+}
 function getLabel(label) {
   const opts = {
     forest: 'forest',
@@ -22,13 +32,36 @@ function getLabel(label) {
     camping: 'camping'
   }
 
+
   return opts[label] || ''
+}
+
+function updateLabel(label) {
+  emit('update-labels', label)
 }
 </script>
 <style scoped lang="scss">
-.label-list {
+@import '@/assets/styles/basics/_helpers.scss';
+
+.label-list:not(.is-preview) {
+  position: absolute;
+  justify-content: end;
+  transform: translateY(-110%);
+  right: 0.5rem;
+  cursor: pointer;
+}
+
+.label-list.is-preview {
   grid-auto-flow: column;
   justify-content: end;
-  gap: 1rem;
+  gap: 0.3rem;
+}
+
+.g-icon {
+
+  &.bold {
+    fill: rgb(158, 158, 158);
+
+  }
 }
 </style>
