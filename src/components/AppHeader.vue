@@ -1,13 +1,8 @@
 <template>
-  <header class="app-header grid">
-    <UserPreview :user="user" />
+  <header class="app-header grid" v-if="props.loggedUser">
+    <UserPreview :user="props.loggedUser" />
     <div class="nav-container">
-      <button
-        class="icon right"
-        @click="isOpen = !isOpen"
-        v-html="$getSvg('menu')"
-        data-title="Open menu"
-      ></button>
+      <button class="icon right" @click="isOpen = !isOpen" v-html="$getSvg('menu')" data-title="Open menu"></button>
       <nav class="app-nav" v-if="isOpen">
         <ul class="clean-list">
           <li v-for="(route, idx) in routes" :key="idx">
@@ -23,11 +18,21 @@
 
 <script setup>
 import UserPreview from './UserPreview.vue'
-import { ref } from 'vue'
+import { ref, watchEffect } from 'vue'
 const user = ref({ username: 'Tal Amit', email: 'tal.Amit0311@gmail.com', color: 'steelblue' })
 
 const isOpen = ref(false)
 const routes = [{ path: '/' }, { path: '/about' }, { path: '/favorites' }, { path: '/contact' }]
+
+const props = defineProps({
+  loggedUser: {
+    type: Object
+  }
+})
+
+watchEffect(() => {
+  console.log('app header:', props.loggedUser)
+})
 
 function getRouteName(path) {
   return path

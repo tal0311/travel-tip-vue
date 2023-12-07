@@ -205,4 +205,6 @@ export const utilService = {
   openPopUp
 }
 
+
+
 window.$utils = utilService

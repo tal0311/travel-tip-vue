@@ -1,6 +1,6 @@
 <template>
   <div class="app-container main-layout">
-    <AppHeader />
+    <AppHeader :loggedUser="loggedInUser" />
     <RouterView />
     <UserMsg />
   </div>
@@ -9,10 +9,34 @@
 <script setup>
 import UserMsg from '@/components/UserMsg.vue'
 import AppHeader from './components/AppHeader.vue'
+
+import { onBeforeMount, watchEffect, computed } from 'vue'
+
+import { useUserStore } from '@/stores/userStore';
+// import { useUserStore } from '@/stores/userStore';
+
+const userStore = useUserStore()
+
+onBeforeMount(() => {
+  loadUser()
+})
+
+async function loadUser() {
+  await userStore.loadUser()
+}
+
+const loggedInUser = computed(() => userStore.getLoggedIdUser)
+
+watchEffect(() => {
+  console.log('loggedInUser:', loggedInUser?.value)
+})
+
 </script>
 
 <style>
 @import '@/assets/styles/setup/_variables.scss';
+
+
 
 .app-container {
   margin-top: 1rem;

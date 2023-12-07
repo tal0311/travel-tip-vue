@@ -1,5 +1,5 @@
 import { storageService } from './async-storage.service.js'
-import { httpService } from './http.service.js'
+// import { httpService } from './http.service.js'
 import { utilService } from './util.service.js'
 // import axios from 'axios'
 // import { store } from '../store/store'
@@ -7,7 +7,7 @@ import { utilService } from './util.service.js'
 // import { showSuccessMsg } from './event-bus.service'
 // import user from './../../data/user.json' assert {type: 'json'}
 
-const STORAGE_KEY_LOGGEDIN_USER = 'loggedinUser'
+const STORAGE_KEY_LOGGED_USER = 'loggedinUser'
 const USER_DB = 'user'
 
 const BASE_URL = process.env.NODE_ENV === 'production' ? '/api/' : 'http://localhost:3030/api/'
@@ -16,7 +16,7 @@ export const userService = {
   login,
   logout,
   signup,
-  getLoggedinUser,
+  getLoggedInUser,
   saveLocalUser,
   getUsers,
   getById,
@@ -29,7 +29,7 @@ export const userService = {
 window.userService = userService
 
 function getUsers() {
-  return storageService.query('user')
+  return storageService.query(USER_DB)
   // return httpService.get(`user`)
 }
 
@@ -41,7 +41,7 @@ function onUserUpdate(user) {
 }
 
 async function getById(userId) {
-  const user = await storageService.get('user', userId)
+  const user = await storageService.get(USER_DB, userId)
   // const user = await httpService.get(`user/${userId}`)
 }
 function remove(userId) {
@@ -50,7 +50,7 @@ function remove(userId) {
 }
 
 async function update({ _id, score }) {
-  const user = await storageService.get('user', _id)
+  const user = await storageService.get(USER_DB, _id)
   // let user = getById(_id)
   // user.score = score
   // await storageService.put('user', user)
@@ -99,12 +99,13 @@ async function changeScore(by) {
 }
 
 function saveLocalUser(user) {
-  sessionStorage.setItem(STORAGE_KEY_LOGGEDIN_USER, JSON.stringify(user))
+  localStorage.setItem(STORAGE_KEY_LOGGED_USER, JSON.stringify(user))
   return user
 }
 
-function getLoggedinUser() {
-  return JSON.parse(sessionStorage.getItem(STORAGE_KEY_LOGGEDIN_USER))
+function getLoggedInUser() {
+  // debugger
+  return JSON.parse(localStorage.getItem(STORAGE_KEY_LOGGED_USER))
 }
 
 function getEmptyUser() {
@@ -116,14 +117,15 @@ function getEmptyUser() {
   }
 }
 
-// ; (async () => {
-//     utilService.saveToStorage(USER_DB, {
-//         _id: "u102",
-//         fullname: "Al Tamit",
-//         username: "al.amit",
-//         email: "al.tmit@gmail.com",
-//         password: "1234",
-//         imgUrl: "https://res.cloudinary.com/tal-amit-dev/image/upload/v1679773600/Instagram/WhatsApp_Image_2023-03-25_at_22.42.55_gh0eyd.jpg"
-//     })
+; (() => {
+    utilService.saveToStorage(STORAGE_KEY_LOGGED_USER, {
+        _id: "u102",
+        fullname: "Al Tamit",
+        username: "al.amit",
+        email: "al.tmit@gmail.com",
+        password: "1234",
+        imgUrl: "https://res.cloudinary.com/tal-amit-dev/image/upload/v1679773600/Instagram/WhatsApp_Image_2023-03-25_at_22.42.55_gh0eyd.jpg",
+        color: 'steelblue'
+    })
 // login(user[0])
-// })()
+})()
