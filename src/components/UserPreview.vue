@@ -1,5 +1,5 @@
 <template>
-  <section class="user-preview">
+  <section @click="navigateTo" class="user-preview">
     <div>
       <div v-if="props.user">
         <img v-if="user.imgUrl" :src="user.imgUrl" />
@@ -10,11 +10,17 @@
 </template>
 
 <script setup>
+import { useRouter } from 'vue-router'
 const props = defineProps({
   user: {
     type: Object
   }
 })
+
+const router = useRouter()
+function navigateTo() {
+  router.push(`/user/${props.user._id}`)
+}
 
 function getInitials(str) {
   const initials = str

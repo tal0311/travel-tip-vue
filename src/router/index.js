@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import { useLocsStore } from '@/stores/locsStore'
+import userView from '../views/UserView.vue'
+
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -35,6 +37,12 @@ const router = createRouter({
       path: '/about',
       name: 'about',
       component: () => import('../views/AboutView.vue')
+    },
+    {
+      path: '/user/:userId',
+      name: 'user-details',
+      component: userView
+      // component: () => import('../views/UserView.vue')
     },
     {
       path: '/:pathMatch(.*)*',

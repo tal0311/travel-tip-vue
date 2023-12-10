@@ -6,10 +6,12 @@
     <button class="icon close-btn grid" @click="msg = null" v-html="$getSvg('close')"></button>
   </div>
 </template>
-
 <script setup>
+
+
 import { eventBus } from '@/services/event-bus.service.js'
 import { onUnmounted, ref, onBeforeMount } from 'vue'
+
 
 const msg = ref(null)
 const unsubscribe = ref(null)
