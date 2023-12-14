@@ -134,7 +134,7 @@ function cancelUpload() {
 
 
   &:hover {
-   background-color: var(--color-border);
+   background-color: lightblue
   }
  }
 
