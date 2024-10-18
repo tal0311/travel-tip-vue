@@ -1,5 +1,5 @@
 <template>
-  <div class="loc-details" v-if="loc">
+  <section class="loc-details" v-if="loc">
     <h3 contenteditable="true" @blur="updateInfo">{{ loc.name }}</h3>
     <img :src="loc.imgUrl" height="400" alt="Location Image" v-defaultImg/>
 
@@ -8,15 +8,18 @@
       <div class="tab-list">
         <button v-for="(tab, idx) in tabs" :key="idx" :class="['tab-button', { active: currentTab === tab }]"
           @click="updateTabs(tab)">
-          Show {{ tab }}
+          {{ tab }}
         </button>
       </div>
 
       <div class="dynamic-container">
-        <Component :is="currentTab" :info="info" @update-info="updateLoc" />
+        <component :is="currentTab" :info="info" @update-info="updateLoc" />
         </div>
     </div>
-  </div>
+    <a :href="`https://waze.com/ul?ll=${loc.lat},${loc.lng}&navigate=yes`" target="_blank">
+      <button>Navigate to {{ loc.name }}</button>
+    </a>
+  </section>
 
   <AppLoader v-else />
 </template>
@@ -28,6 +31,7 @@ import AppLoader from '@/components/AppLoader.vue'
 import LocUpdates from '@/components/dynamicCmp/LocUpdates.vue'
 import LocNotes from '@/components/dynamicCmp/LocNotes.vue'
 import LocWeather from '@/components/dynamicCmp/LocWeather.vue'
+import LocVids from '@/components/dynamicCmp/LocVids.vue'
 import LabelList from '@/components/LabelList.vue'
 
 import { useRoute } from 'vue-router'
@@ -41,7 +45,7 @@ const locsStore = useLocsStore()
 const updatedStore = useUpdatedStore()
 
 const route = useRoute()
-const tabs = ['Notes', 'Updates', 'Weather']
+const tabs = ['Notes', 'Updates', 'Weather','Videos']
 const loc = ref(null)
 const updates = computed(() => updatedStore.getUpdates)
 
@@ -83,6 +87,10 @@ function updateTabs(tab) {
     case 'Weather':
       currentTab.value = LocWeather
       info.value = { lat: loc.value.lat, lng: loc.value.lng }
+      break
+    case 'Videos':
+      currentTab.value = LocVids
+      info.value = loc.value.vids
       break
   }
 }

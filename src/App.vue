@@ -5,12 +5,15 @@
       <RouterView />
     </section>
     <UserMsg />
+
+    <AppModal />
   </div>
 </template>
 
 <script setup>
 import UserMsg from '@/components/UserMsg.vue'
 import AppHeader from './components/AppHeader.vue'
+import AppModal from './components/modal/AppModal.vue'
 
 import { onBeforeMount, watchEffect, computed } from 'vue'
 

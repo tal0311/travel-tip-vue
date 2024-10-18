@@ -92,7 +92,14 @@ function createLocations() {
         updatedAt: null,
         imgUrl: 'https://source.unsplash.com/random/800x800?river',
         isFav: true,
-        labels: ['forest', 'hiking']
+        labels: ['forest', 'hiking'],
+        vids: [
+          {
+            title: 'video1',
+            description: 'somDescription',
+            vidId: '3JZ_D3ELwOQ'
+          }
+        ]
       },
       {
         _id: utilService.makeId(),
@@ -105,7 +112,14 @@ function createLocations() {
         updatedAt: null,
         imgUrl: 'https://source.unsplash.com/random/800x800?forest',
         isFav: false,
-        labels: ['beach', 'hiking']
+        labels: ['beach', 'hiking'],
+        vids: [
+          {
+            title: 'video1',
+            description: 'somDescription',
+            vidId: '1hPV_xWBzSk'
+          }
+        ]
       }
     ]
     utilService.saveToStorage(LOCS_KEY, locations)
