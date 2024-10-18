@@ -1,44 +1,45 @@
 <template>
- <div class="user-profile">
-  <!-- <pre>{{ loggedInUser }}</pre> -->
+    <div class="user-profile blur-bg grid">
+        <!-- <pre>{{ loggedInUser }}</pre> -->
 
-  <div class="info-container blur-bg">
+        <div class="info-container">
 
-   <h3>{{ form.fullname }}</h3>
-   <h4>{{ form.username }}</h4>
-   <h5>{{ form.email }}</h5>
-  </div>
+            <h3>{{ form.fullname }}</h3>
+            <h4>{{ form.username }}</h4>
+            <h5>{{ form.email }}</h5>
+        </div>
 
-  <form @submit.prevent="handleSubmit">
+        <form @submit.prevent="handleSubmit">
 
-   <input class="upload-btn" @change="previewImg" type="file" id="postImg" name="postImg" accept="image/*,video/*">
+            <input class="upload-btn" @change="previewImg" type="file" id="postImg" name="postImg"
+                accept="image/*,video/*">
 
-   <!-- user image preview -->
-   <label class="post-img-label" for="postImg">
-    <i class="upload-icon" v-html="$getSvg('add-media')"></i>
+            <!-- user image preview -->
+            <label class="post-img-label" for="postImg">
+                <i class="upload-icon grid" v-html="$getSvg('add-media')"></i>
 
-    <template v-if="tempFile.file">
-     <section class="img-edit grid">
-      <div class="img-container">
-       <img :src="tempFile.src" alt="post-img">
-       <i @click="cancelUpload" v-html="$getSvg('change-img')"></i>
-      </div>
-     </section>
-    </template>
+                <template v-if="tempFile.file">
+                    <section class="img-edit grid">
+                        <div class="img-container">
+                            <img :src="tempFile.src" alt="post-img">
+                            <i  @click="cancelUpload" v-html="$getSvg('change-img')"></i>
+                        </div>
+                    </section>
+                </template>
 
-    <template v-else>
-     <section class="user-img-preview">
-      <img :src="form.imgUrl" alt="post-img">
-     </section>
-    </template>
+                <template v-else>
+                    <section class="user-img-preview">
+                        <img :src="form.imgUrl" alt="post-img" v-defaultImg:form.imgUrl>
+                    </section>
+                </template>
 
-   </label>
+            </label>
 
-  </form>
+        </form>
 
 
 
- </div>
+    </div>
 </template>
 
 <script setup>
@@ -53,24 +54,24 @@ const route = useRoute()
 const userStore = useUserStore()
 
 onBeforeMount(() => {
- loadUser()
+    loadUser()
 })
 
 const loggedInUser = computed(() => userStore.getLoggedIdUser)
 
-const tempFile = reactive({
- file: null,
- src: null
+let tempFile = reactive({
+    file: null,
+    src: null
 })
 
 const isEditor = ref(false)
 
 const form = reactive({
- fullname: loggedInUser.value.fullname,
- username: loggedInUser.value.username,
- email: loggedInUser.value.email,
- imgUrl: loggedInUser.value.imgUrl,
- color: loggedInUser.value.color,
+    fullname: loggedInUser.value.fullname,
+    username: loggedInUser.value.username,
+    email: loggedInUser.value.email,
+    imgUrl: loggedInUser.value.imgUrl,
+    color: loggedInUser.value.color,
 })
 
 function loadUser() {
@@ -78,41 +79,41 @@ function loadUser() {
 }
 
 const handleSubmit = () => {
- console.log('submit!', form)
+    console.log('submit!', form)
 }
 
 
 async function uploadPostImg(file) {
- const { url } = await uploadService.uploadImg(file)
- this.post.imgUrl = url
+    const { url } = await uploadService.uploadImg(file)
+    this.post.imgUrl = url
 
 }
 function previewImg(ev) {
- const file = ev.type === 'change' ?
-  ev.target.files[0] :
-  ev.dataTransfer.files[0]
- const img = new Image()
- const reader = new FileReader()
- reader.onload = (ev) => {
-  img.src = ev.target.result
-  tempFile.src = img.src
-  tempFile.file = file
- }
- reader.readAsDataURL(file)
- isEditor.value = true
+    const file = ev.type === 'change' ?
+        ev.target.files[0] :
+        ev.dataTransfer.files[0]
+    const img = new Image()
+    const reader = new FileReader()
+    reader.onload = (ev) => {
+        img.src = ev.target.result
+        tempFile.src = img.src
+        tempFile.file = file
+    }
+    reader.readAsDataURL(file)
+    isEditor.value = true
 
 }
 
 async function onAddPost() {
- await uploadPostImg(tempFile.file)
- // this.addPost({ post: JSON.parse(JSON.stringify(this.post)) })
- // this.$emit('closeModal')
+    await uploadPostImg(tempFile.file)
+    // this.addPost({ post: JSON.parse(JSON.stringify(this.post)) })
+    // this.$emit('closeModal')
 }
 function cancelUpload() {
- tempFile = {
-  file: null,
-  src: null
- }
+    tempFile = {
+        file: null,
+        src: null
+    }
 }
 </script>
 
@@ -122,31 +123,48 @@ function cancelUpload() {
 @import '@/assets/styles/basics/_helpers.scss';
 
 .user-profile {
- text-align: center;
 
- form {
-  position: relative;
- }
+    gap: 1rem;
 
- label.post-img-label {
-  position: relative;
-  cursor: pointer;
+    img {
+        border-radius: 10px;
+    }
+
+    .info-container {}
+
+    text-align: center;
+
+    form {
+        position: relative;
+    }
+
+    label.post-img-label {
+        position: relative;
+        cursor: pointer;
 
 
-  &:hover {
-   background-color: lightblue
-  }
- }
+        &:hover {
+            background-color: lightblue
+        }
+    }
 
- .upload-icon {
-  position: absolute;
-  top: 50%;
-  left: -50%;
-  transform: translate(50%, -50%);
- }
+    .upload-icon {
+        position: absolute;
+        top: 50%;
+        left: -25%;
+        transform: translate(50%, -50%);
+    
+            background-color: var(el-color-info-light-3);
+            background-color: #d3d3d366;
+            border-radius: 16px;
+            padding: 0.3rem;
+        
+    }
 
- .upload-btn {
-  display: none;
- }
+    .upload-btn {
+        display: none;
+    }
+
+   
 }
 </style>

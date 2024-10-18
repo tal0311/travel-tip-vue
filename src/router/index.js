@@ -1,7 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import { useLocsStore } from '@/stores/locsStore'
-import userView from '../views/UserView.vue'
+import userView from '@/views/UserView.vue'
+import LocDetails from '@/views/LocDetails.vue'
+import FavoritesView from '@/views/FavoritesView.vue'
 
 
 const router = createRouter({
@@ -15,12 +17,12 @@ const router = createRouter({
     {
       path: '/loc/:locId',
       name: 'location-details',
-      component: () => import('@/views/LocDetails.vue')
+      component: LocDetails
     },
     {
       path: '/favorites',
       name: 'favorite-locations',
-      component: () => import('@/views/FavoritesView.vue'),
+      component: FavoritesView,
       beforeEnter: async (to, from, next) => {
         const answer = confirm('You are about to enter the Favorite locations area')
         const locsStore = useLocsStore()

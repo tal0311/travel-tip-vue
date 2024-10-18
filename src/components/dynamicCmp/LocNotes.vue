@@ -14,7 +14,10 @@ const props = defineProps({
   }
 })
 
-onBeforeMount(() => {})
+onBeforeMount(() => {
+  console.log('props:', props.info);
+  
+})
 
 function updateInfo(ev) {
   ev.target.innerText

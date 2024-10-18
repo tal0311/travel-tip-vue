@@ -1,7 +1,9 @@
 <template>
   <div class="app-container main-layout">
     <AppHeader :loggedUser="loggedInUser" />
-    <RouterView />
+    <section class="router-view">
+      <RouterView />
+    </section>
     <UserMsg />
   </div>
 </template>
@@ -102,5 +104,10 @@ nav a:first-of-type {
     padding: 1rem 0;
     margin-top: 1rem;
   }
+}
+
+
+.router-view {
+ margin-bottom: 5rem;
 }
 </style>

@@ -64,13 +64,13 @@ watchEffect(() => {})
 </script>
 
 <style lang="scss" scoped>
-@import '@/assets//styles/setup/mixins.scss';
+@import '@/assets/styles/setup/mixins.scss';
 @import '@/assets/styles/setup/variables.scss';
 
 .info-window {
   display: grid;
   grid-auto-flow: row;
-  width: 50vw;
+  width: clamp(50vw, 70vw, 400px);
   position: fixed;
   top: 50%;
   left: 50%;
@@ -79,7 +79,7 @@ watchEffect(() => {})
   padding: 0.5rem;
   border-radius: 4px;
   gap: 0.5rem;
-  max-width: 400px;
+  // max-width: 400px;
 
   .info-actions {
     justify-content: space-between;

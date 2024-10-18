@@ -5,7 +5,7 @@
 <script setup>
 import LocList from '../components/LocList.vue'
 import { computed, onBeforeMount } from 'vue'
-import { useLocsStore } from '@/stores/LocsStore'
+import { useLocsStore } from '@/stores/locsStore'
 
 const locsStore = useLocsStore()
 onBeforeMount(() => {

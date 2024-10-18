@@ -4,7 +4,7 @@
       <h2>{{ props.loc.name }}</h2>
       <button class="icon right" data-title="Toggle bookmark" @click.stop="addToFav" v-html="$getSvg(getIcon)"></button>
     </header>
-    <img height="400" :src="props.loc.imgUrl" alt="Location Image" />
+    <img height="400" :src="props.loc.imgUrl" v-defaultImg alt="Location Image" />
     <LabelList :labels="props.loc.labels" isPreview="true" />
     <div class="loc-actions">
       <button data-title="Remove location" class="icon remove-loc action-in-hover" @click.stop="removeLoc"
@@ -82,6 +82,11 @@ const getIcon = computed(() => {
   }
 
   &:hover {
+    .action-in-hover {
+      opacity: 1;
+    }
+  }
+  @media (width<600px){
     .action-in-hover {
       opacity: 1;
     }

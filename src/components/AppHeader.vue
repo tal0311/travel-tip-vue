@@ -46,7 +46,7 @@ function getRouteName(path) {
 .app-header {
   grid-auto-flow: column;
   justify-content: space-between;
-  margin-bottom: 2rem;
+  
   align-items: center;
 }
 
@@ -56,5 +56,6 @@ function getRouteName(path) {
   background: #fff;
   box-shadow: 0 0 2px 0px #c9c9c9;
   padding: 0.5rem;
+  z-index: 10;
 }
 </style>
