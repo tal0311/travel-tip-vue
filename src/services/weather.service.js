@@ -2,7 +2,7 @@ const WEATHER_KEY = import.meta.env.VITE_WEATHER_API_KEY
 
 async function getWeatherByLocation({ lat, lng }) {
   const response = await fetch(
-    `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&APPID=${WEATHER_KEY}`
+    `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&APPID=${WEATHER_KEY}`
   )
 
   const weatherData = await response.json()

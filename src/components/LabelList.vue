@@ -1,8 +1,8 @@
 <template>
   <ul :class="['label-list clean-list grid', $attrs.isPreview ? 'is-preview' : 'blur-bg']">
 
-    <li v-for="( label, idx ) in   labelList  " :key="idx" @click="updateLabel(label)">
-      <span :class="isLocLabel(label)" v-html="$getSvg(getLabel(label))"></span>
+    <li v-for="( label, idx ) in   labelList  " :key="idx">
+      <span @click="emit('update-labels' ,label)" :class="isLocLabel(label)" v-html="$getSvg(getLabel(label))"></span>
     </li>
   </ul>
 </template>

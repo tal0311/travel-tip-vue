@@ -1,9 +1,11 @@
 <template>
-  <section class="loc-details" v-if="loc">
+  <section class="loc-details grid" v-if="loc">
     <h3 contenteditable="true" @blur="updateInfo">{{ loc.name }}</h3>
-    <img :src="loc.imgUrl" height="400" alt="Location Image" v-defaultImg/>
+    <div class="img-container">
+      <img :src="loc.imgUrl" height="400" alt="Location Image" v-defaultImg />
+      <LabelList @update-labels="updateLocLabel" :labels="loc.labels" />
+    </div>
 
-    <LabelList @update-labels="updateLocLabel" :labels="loc.labels" />
     <div>
       <div class="tab-list">
         <button v-for="(tab, idx) in tabs" :key="idx" :class="['tab-button', { active: currentTab === tab }]"
@@ -14,7 +16,7 @@
 
       <div class="dynamic-container">
         <component :is="currentTab" :info="info" @update-info="updateLoc" />
-        </div>
+      </div>
     </div>
     <a :href="`https://waze.com/ul?ll=${loc.lat},${loc.lng}&navigate=yes`" target="_blank">
       <button>Navigate to {{ loc.name }}</button>
@@ -35,7 +37,7 @@ import LocVids from '@/components/dynamicCmp/LocVids.vue'
 import LabelList from '@/components/LabelList.vue'
 
 import { useRoute } from 'vue-router'
-import { computed, onBeforeMount, ref, watchEffect} from 'vue'
+import { computed, onBeforeMount, ref, watchEffect } from 'vue'
 import { useLocsStore } from '@/stores/locsStore'
 import { useUpdatedStore } from '@/stores/updateStore'
 import { locService } from '@/services/loc.service'
@@ -45,14 +47,14 @@ const locsStore = useLocsStore()
 const updatedStore = useUpdatedStore()
 
 const route = useRoute()
-const tabs = ['Notes', 'Updates', 'Weather','Videos']
+const tabs = ['Notes', 'Updates', 'Weather', 'Videos']
 const loc = ref(null)
 const updates = computed(() => updatedStore.getUpdates)
 
 onBeforeMount(() => {
   loadLoc()
   loadUpdates()
- 
+
 })
 
 watchEffect(() => {
@@ -74,7 +76,7 @@ const currentTab = ref(null)
 const info = ref(null)
 
 function updateTabs(tab) {
-  
+
   switch (tab) {
     case 'Notes':
       currentTab.value = LocNotes
