@@ -52,6 +52,15 @@
 
 .grid {
   display: grid;
+
+  &.grid-dir-cols{
+    grid-auto-flow: column;
+  }
+
+
+  &.grid-dir-rows{
+    grid-auto-flow: row;
+  }
 }
 
 .blur-bg {
@@ -66,4 +75,10 @@
 
 .temp-outline {
   outline: 1px solid #d3d3d36e;
+}
+
+.svg-icon{
+  display: grid;
+  place-items: center;
+  cursor: pointer;
 }

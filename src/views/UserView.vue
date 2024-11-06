@@ -11,31 +11,38 @@
 
         <form @submit.prevent="handleSubmit">
 
-            <input class="upload-btn" @change="previewImg" type="file" id="postImg" name="postImg"
-                accept="image/*,video/*">
 
             <!-- user image preview -->
             <label class="post-img-label" for="postImg">
                 <i class="upload-icon grid" v-html="$getSvg('add-media')"></i>
 
-                <template v-if="tempFile.file">
+                <input class="upload-btn" @change="previewImg" type="file" id="postImg" name="postImg"
+                    accept="image/*,video/*">
+
+                <!-- <template v-if="tempFile.file">
                     <section class="img-edit grid">
                         <div class="img-container">
                             <img :src="tempFile.src" alt="post-img">
                             <i  @click="cancelUpload" v-html="$getSvg('change-img')"></i>
                         </div>
                     </section>
-                </template>
+                </template> -->
+                <!-- {{ form.imgUrl }} -->
 
-                <template v-else>
-                    <section class="user-img-preview">
-                        <img :src="form.imgUrl" alt="post-img" v-defaultImg:form.imgUrl>
-                    </section>
-                </template>
+                <section class="user-img-preview">
+                    <img :src="form.imgUrl" alt="post-img" v-defaultImg:form.imgUrl>
+                </section>
+
+
 
             </label>
 
         </form>
+
+        <div v-if="isTempImag" class="actions-container grid grid-dir-cols">
+            <i class="svg-icon" @click="cancelUpload" v-html="$getSvg('cancel')"></i>
+            <i class="svg-icon" @click="onAddPost" v-html="$getSvg('confirm')"></i>
+        </div>
 
 
 
@@ -54,16 +61,19 @@ const route = useRoute()
 const userStore = useUserStore()
 
 onBeforeMount(() => {
+    console.log(userStore);
+
     loadUser()
 })
 
 const loggedInUser = computed(() => userStore.getLoggedIdUser)
 
-let tempFile = reactive({
-    file: null,
-    src: null
-})
+// let tempFile = reactive({
+//     file: null,
+//     src: null
+// })
 
+const isTempImag = ref(false)
 const isEditor = ref(false)
 
 const form = reactive({
@@ -84,11 +94,13 @@ const handleSubmit = () => {
 
 
 async function uploadPostImg(file) {
-    const { url } = await uploadService.uploadImg(file)
-    this.post.imgUrl = url
+    const imgUrl = await uploadService.uploadImg(file)
+    form.imgUrl = imgUrl
+
+    return imgUrl
 
 }
-function previewImg(ev) {
+const previewImg = (ev) => {
     const file = ev.type === 'change' ?
         ev.target.files[0] :
         ev.dataTransfer.files[0]
@@ -96,24 +108,24 @@ function previewImg(ev) {
     const reader = new FileReader()
     reader.onload = (ev) => {
         img.src = ev.target.result
-        tempFile.src = img.src
-        tempFile.file = file
+        form.imgUrl = img.src
+        console.log('img.src:', img.src);
+        isTempImag.value = true
+
+        // tempFile.src = img.src
+        // tempFile.file = file
     }
     reader.readAsDataURL(file)
     isEditor.value = true
-
 }
 
 async function onAddPost() {
-    await uploadPostImg(tempFile.file)
-    // this.addPost({ post: JSON.parse(JSON.stringify(this.post)) })
-    // this.$emit('closeModal')
+    const imgUrl = await uploadPostImg(form.imgUrl)
+    await userStore.updateUser('imgUrl', imgUrl)
 }
 function cancelUpload() {
-    tempFile = {
-        file: null,
-        src: null
-    }
+    isTempImag.value = false
+    form.imgUrl = loggedInUser.value.imgUrl
 }
 </script>
 
@@ -150,20 +162,26 @@ function cancelUpload() {
 
     .upload-icon {
         position: absolute;
-    right: 4rem;
-    bottom: -1rem;
-    transform: translate(50%, -50%);
-    background-color: var(el-color-info-light-3);
-    background-color: rgba(211, 211, 211, 0.4);
-    border-radius: 16px;
-    padding: 0.3rem;
-        
+        right: 4rem;
+        bottom: -1rem;
+        transform: translate(50%, -50%);
+        background-color: var(el-color-info-light-3);
+        background-color: rgba(211, 211, 211, 0.4);
+        border-radius: 16px;
+        padding: 0.3rem;
+
     }
 
     .upload-btn {
         display: none;
     }
 
-   
+    .actions-container {
+        i {
+            cursor: pointer;
+            font-size: 2rem;
+            border: 1px solid lightgray;
+        }
+    }
 }
 </style>

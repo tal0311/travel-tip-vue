@@ -41,7 +41,7 @@ function onUserUpdate(user) {
 }
 
 async function getById(userId) {
-  const user = await storageService.get(USER_DB, userId)
+  const user = await storageService.get(STORAGE_KEY_LOGGED_USER, userId)
   // const user = await httpService.get(`user/${userId}`)
 }
 function remove(userId) {
@@ -49,16 +49,12 @@ function remove(userId) {
   // return httpService.delete(`user/${userId}`)
 }
 
-async function update({ _id, score }) {
-  const user = await storageService.get(USER_DB, _id)
-  // let user = getById(_id)
-  // user.score = score
-  // await storageService.put('user', user)
+async function update(user) {
+  let userToUpdate = await getLoggedInUser()
+  userToUpdate = user
+  if (!userToUpdate) throw new Error('No user to update')
 
-  // user = await httpService.put(`user/${user._id}`, user)
-  // Handle case in which admin updates other user's details
-  if (getLoggedinUser()._id === user._id) saveLocalUser(user)
-  return user
+  return saveLocalUser(user)
 }
 
 async function login({ username, password }) {
@@ -118,14 +114,14 @@ function getEmptyUser() {
 }
 
 ; (() => {
-    utilService.saveToStorage(STORAGE_KEY_LOGGED_USER, {
-        _id: "u102",
-        fullname: "Al Tamit",
-        username: "al.amit",
-        email: "al.tmit@gmail.com",
-        password: "1234",
-        imgUrl: "https://res.cloudinary.com/tal-amit-dev/image/upload/v1679773600/Instagram/WhatsApp_Image_2023-03-25_at_22.42.55_gh0eyd.jpg",
-        color: 'steelblue'
-    })
-// login(user[0])
+  utilService.saveToStorage(STORAGE_KEY_LOGGED_USER, {
+    _id: "u102",
+    fullname: "Al Tamit",
+    username: "al.amit",
+    email: "al.tmit@gmail.com",
+    password: "1234",
+    imgUrl: "https://res.cloudinary.com/tal-amit-dev/image/upload/v1679773600/Instagram/WhatsApp_Image_2023-03-25_at_22.42.55_gh0eyd.jpg",
+    color: 'steelblue'
+  })
+  // login(user[0])
 })()
