@@ -1,10 +1,9 @@
 <template>
   <AppSearch @search="filterLocs" />
-  <details ref="mapRef" :title="title">
+  <details ref="mapRef" :title="title" :open="isMapOpen">
     <summary>Map</summary>
     <AppMap @add-location="addPlace" />
   </details>
-
   <LocList :locs="locs" header="Your locations" @remove-loc="removeLoc" @favorite="toggleFav" @onPenToLoc="penToLoc" />
 </template>
 
@@ -22,6 +21,7 @@ onBeforeMount(() => {
   loadLocs()
 })
 const locs = computed(() => locsStore.getLocs)
+const isMapOpen = ref(false)
 async function loadLocs() {
   await locsStore.loadLocs()
 }
@@ -56,6 +56,8 @@ function toggleFav(locId) {
 }
 
 function penToLoc(loc) {
+  scrollTo({ top: 90, behavior: 'smooth' })
+  isMapOpen.value = true
   locsStore.setCurrLoc(loc)
 }
 </script>

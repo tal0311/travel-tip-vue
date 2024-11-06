@@ -150,14 +150,13 @@ function cancelUpload() {
 
     .upload-icon {
         position: absolute;
-        top: 50%;
-        left: -25%;
-        transform: translate(50%, -50%);
-    
-            background-color: var(el-color-info-light-3);
-            background-color: #d3d3d366;
-            border-radius: 16px;
-            padding: 0.3rem;
+    right: 4rem;
+    bottom: -1rem;
+    transform: translate(50%, -50%);
+    background-color: var(el-color-info-light-3);
+    background-color: rgba(211, 211, 211, 0.4);
+    border-radius: 16px;
+    padding: 0.3rem;
         
     }
 

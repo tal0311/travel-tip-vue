@@ -11,7 +11,7 @@
 
 <script setup>
 import {useGlobals} from '@/hooks.js'
-import { ref, onBeforeMount } from 'vue'
+import { onBeforeMount } from 'vue'
 const props=defineProps({
     info:{
         type:Array

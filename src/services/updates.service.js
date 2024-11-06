@@ -1,28 +1,12 @@
-import { storageService } from '@/services/async-storage.service'
-import { utilService } from '@/services/util.service'
+// import { storageService } from '@/services/async-storage.service'
+// import { utilService } from '@/services/util.service'
 
 export const updateService = {
-  getUpdatesByLocationId,
+  // getUpdatesByLocationId,
   getUpdateByType,
-  addUpdate
+  createUpdate
 }
 
-const DB_KEY = 'updatesDB'
-createUpdates()
-
-async function getUpdatesByLocationId(locId) {
-  return await storageService.get(DB_KEY, locId)
-}
-
-async function getAllUpdates() {
-  return await storageService.query(DB_KEY)
-}
-
-async function addUpdate(updateType, locId) {
-  const loc = await getUpdatesByLocationId(locId)
-  loc.history.push(createUpdate(updateType))
-  return loc.history.at(-1)
-}
 
 function createUpdate(type) {
   return {
@@ -40,15 +24,3 @@ function getUpdateByType(type) {
   return opts[type] || ''
 }
 
-function createUpdates() {
-  let updates = utilService.loadFromStorage(DB_KEY)
-  if (!updates || !updates.length) {
-    const locs = utilService.loadFromStorage('locationsDB')
-    updates = [
-      { _id: locs[0]._id, history: [createUpdate('weather'), createUpdate('note')] },
-      { _id: locs[1]._id, history: [createUpdate('note'), createUpdate('note')] }
-    ]
-    utilService.saveToStorage(DB_KEY, updates)
-  }
-  return updates
-}

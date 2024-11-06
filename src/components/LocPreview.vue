@@ -11,6 +11,8 @@
         v-html="$getSvg('remove')"></button>
       <button data-title="Pen map to location" class="icon pen-loc action-in-hover" @click.stop="penToLocation"
         v-html="$getSvg('loc')"></button>
+      <button data-title="Edit location" class="icon pen-loc action-in-hover" @click.stop=""
+        v-html="$getSvg('edit')"></button>
     </div>
   </section>
 </template>
@@ -86,9 +88,16 @@ const getIcon = computed(() => {
       opacity: 1;
     }
   }
-  @media (width<600px){
+
+  @media (width<600px) {
     .action-in-hover {
+      margin-inline-start: 0.5rem;
+      border: 1px solid $clr8;
+      border-radius: 100vh;
+      padding: 0.4rem 0.5rem;
       opacity: 1;
+
+
     }
   }
 }

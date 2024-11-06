@@ -1,5 +1,6 @@
 import { utilService } from './util.service.js'
 import { storageService } from './async-storage.service.js'
+import { updateService } from './updates.service.js'
 
 export const locService = {
   getLocs,
@@ -32,8 +33,12 @@ async function getLocs(filterBy) {
   return locs
 }
 
-async function save(loc) {
-  if (loc._id) return await storageService.put(LOCS_KEY, loc)
+async function save(loc , key) {
+  if (loc._id) {
+    const update= updateService.createUpdate(key)
+    loc.updates.push(update)
+    return await storageService.put(LOCS_KEY, loc)
+  } 
   else return await storageService.post(LOCS_KEY, loc)
 }
 
@@ -83,6 +88,7 @@ function createLocations() {
     locations = [
       {
         _id: utilService.makeId(),
+        ownerId: 'u102',
         name: 'Greatplace',
         lat: 32.047104,
         lng: 34.832384,
@@ -98,11 +104,23 @@ function createLocations() {
             title: 'video1',
             description: 'somDescription',
             vidId: '3JZ_D3ELwOQ'
+          },
+          
+        ],
+        updates:[
+          {
+            "type": "weather",
+            "updatedAt": 1729321163621
+          },
+          {
+            "type": "note",
+            "updatedAt": 1729321163621
           }
         ]
       },
       {
         _id: utilService.makeId(),
+        ownerId: 'u102',
         name: 'Neveragain',
         lat: 32.047201,
         lng: 34.832581,
@@ -118,6 +136,16 @@ function createLocations() {
             title: 'video1',
             description: 'somDescription',
             vidId: '1hPV_xWBzSk'
+          }
+        ],
+        updates:[
+          {
+            "type": "weather",
+            "updatedAt": 1729321163621
+          },
+          {
+            "type": "note",
+            "updatedAt": 1729321163621
           }
         ]
       }

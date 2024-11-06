@@ -8,7 +8,7 @@
 
     <div>
       <div class="tab-list">
-        <button v-for="(tab, idx) in tabs" :key="idx" :class="['tab-button', { active: currentTab === tab }]"
+        <button v-for="(tab, idx) in tabs" :key="idx" :class="['tab-button', { active: activeTab === tab }]"
           @click="updateTabs(tab)">
           {{ tab }}
         </button>
@@ -39,21 +39,21 @@ import LabelList from '@/components/LabelList.vue'
 import { useRoute } from 'vue-router'
 import { computed, onBeforeMount, ref, watchEffect } from 'vue'
 import { useLocsStore } from '@/stores/locsStore'
-import { useUpdatedStore } from '@/stores/updateStore'
+// import { useUpdatedStore } from '@/stores/updateStore'
 import { locService } from '@/services/loc.service'
 // import { updateService } from '../services/updates.service'
 
 const locsStore = useLocsStore()
-const updatedStore = useUpdatedStore()
+// const updatedStore = useUpdatedStore()
 
 const route = useRoute()
 const tabs = ['Notes', 'Updates', 'Weather', 'Videos']
 const loc = ref(null)
-const updates = computed(() => updatedStore.getUpdates)
+
 
 onBeforeMount(() => {
   loadLoc()
-  loadUpdates()
+  // loadUpdates()
 
 })
 
@@ -67,11 +67,7 @@ async function loadLoc() {
   loc.value = await locService.getLocById(route.params.locId)
 }
 
-
-async function loadUpdates() {
-  updateLoc.value = await updatedStore.loadUpdates(route.params.locId)
-}
-
+const activeTab = ref('Notes')
 const currentTab = ref(null)
 const info = ref(null)
 
@@ -81,18 +77,22 @@ function updateTabs(tab) {
     case 'Notes':
       currentTab.value = LocNotes
       info.value = loc.value.note
+      activeTab.value = 'Notes'
       break
     case 'Updates':
       currentTab.value = LocUpdates
-      info.value = updates.value
+      info.value = loc.value.updates
+      activeTab.value = 'Updates'
       break
     case 'Weather':
       currentTab.value = LocWeather
       info.value = { lat: loc.value.lat, lng: loc.value.lng }
+      activeTab.value = 'Weather'
       break
     case 'Videos':
       currentTab.value = LocVids
       info.value = loc.value.vids
+      activeTab.value = 'Videos'
       break
   }
 }
@@ -104,12 +104,7 @@ async function updateLoc({ key, value }) {
     value
   }
 
-  if (key === 'weather') {
-    await updatedStore.addUpdate(locToUpdate)
-    return
-  }
-
-  loc.value = await locsStore.updateLoc(locToUpdate)
+  loc.value=await locsStore.updateLoc(locToUpdate)
 }
 
 async function updateLocLabel(label) {
@@ -118,6 +113,8 @@ async function updateLocLabel(label) {
     label
   }
   loc.value = await locsStore.updateLocLabel(locToUpdate)
+
+  
 }
 
 function updateInfo(ev) {

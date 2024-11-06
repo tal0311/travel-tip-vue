@@ -11,7 +11,7 @@
     />
   </section>
 
-  <AppLoader v-else />
+  <AppLoader v-else />  
 </template>
 
 <script setup>
