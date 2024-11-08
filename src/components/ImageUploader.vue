@@ -10,8 +10,8 @@
         </label>
 
         <div v-if="isTempImage" class="actions-container grid grid-dir-cols">
-            <i class="svg-icon" @click="cancelUpload" v-html="$getSvg('cancel')"></i>
-            <i class="svg-icon" @click="confirmUpload" v-html="$getSvg('confirm')"></i>
+            <i class="svg-icon" @click="cancelUpload" v-html="$getSvg('cancel',{fill:'#ff4343'})"></i>
+            <i class="svg-icon" @click="confirmUpload" v-html="$getSvg('confirm',{fill:'#49ff43'})"></i>
         </div>
     </div>
 </template>
@@ -69,6 +69,10 @@ function resetUploader() {
 .image-uploader {
     margin:1rem 0;
     position: relative;
+    img{
+        width: 100%;
+        object-fit: cover;
+    }
 
     .post-img-label {
         cursor: pointer;

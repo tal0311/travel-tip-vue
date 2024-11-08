@@ -11,7 +11,7 @@
         <!-- user image preview -->
         <section class="user-img-preview">
             <ImageUploader :initialImageUrl="form.imgUrl" @update:image="form.imgUrl = $event" @confirm="onAddPost"
-                @cancel="cancelUpload" />
+                @cancel="cancelUpload" :minHeight="800"/>
         </section>
     </div>
 </template>

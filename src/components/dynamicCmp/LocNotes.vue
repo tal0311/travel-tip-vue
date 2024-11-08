@@ -25,4 +25,14 @@ function updateInfo(ev) {
 }
 </script>
 
-<style></style>
+<style lang="scss" scoped>
+
+@import '@/assets/styles/setup/variables.scss';
+
+p{
+  padding: 1rem 0 1rem 0.5rem;
+  &:focus{
+    outline: 1px solid $clr4;
+  }
+}
+</style>

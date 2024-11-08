@@ -2,7 +2,7 @@
   <header class="app-header grid" v-if="props.loggedUser">
     <UserPreview :user="props.loggedUser" />
     <div class="nav-container">
-      <button class="icon right" @click="isOpen = !isOpen" v-html="$getSvg('menu')" data-title="Open menu"></button>
+      <button class="icon right" @click="isOpen = !isOpen" v-html="$getSvg('menu',{height:32, width:32})" data-title="Open menu"></button>
       <nav class="app-nav" v-if="isOpen">
         <ul class="clean-list">
           <li v-for="(route, idx) in routes" :key="idx">
