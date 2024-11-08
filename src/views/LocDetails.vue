@@ -2,7 +2,10 @@
   <section class="loc-details grid" v-if="loc">
     <h3 contenteditable="true" @blur="updateInfo">{{ loc.name }}</h3>
     <div class="img-container">
-      <img :src="loc.imgUrl" height="400" alt="Location Image" v-defaultImg />
+      <!-- <img :src="loc.imgUrl" height="400" alt="Location Image" v-defaultImg /> -->
+
+      <ImageUploader :initialImageUrl="loc.imgUrl" @update:image="loc.imgUrl = $event" @confirm="()=> updateLoc({ key: 'imgUrl', value: loc.imgUrl })"
+                @cancel="cancelUpload" />
       <LabelList @update-labels="updateLocLabel" :labels="loc.labels" />
     </div>
 
@@ -41,6 +44,7 @@ import { computed, onBeforeMount, ref, watchEffect } from 'vue'
 import { useLocsStore } from '@/stores/locsStore'
 // import { useUpdatedStore } from '@/stores/updateStore'
 import { locService } from '@/services/loc.service'
+import ImageUploader from '../components/ImageUploader.vue'
 // import { updateService } from '../services/updates.service'
 
 const locsStore = useLocsStore()
@@ -104,7 +108,9 @@ async function updateLoc({ key, value }) {
     value
   }
 
-  loc.value=await locsStore.updateLoc(locToUpdate)
+  console.log('locToUpdate:', locToUpdate);
+  
+  // loc.value=await locsStore.updateLoc(locToUpdate)
 }
 
 async function updateLocLabel(label) {

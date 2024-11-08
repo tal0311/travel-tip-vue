@@ -5,7 +5,7 @@
             <i class="icon-svg upload-icon" v-html="$getSvg('add-media')"></i>
             <input class="upload-btn" @change="previewImg" type="file" id="postImg" accept="image/*,video/*">
             <section class="user-img-preview">
-                <img :src="imageUrl" alt="uploaded-img" v-defaultImg:imageUrl>
+                <img :height="props.minHeight" :src="imageUrl" alt="uploaded-img" v-defaultImg:imageUrl>
             </section>
         </label>
 
@@ -21,7 +21,11 @@ import { ref, watch } from 'vue';
 import { uploadService } from '@/services/upload.service.js';
 
 const props = defineProps({
-    initialImageUrl: String
+    initialImageUrl: String,
+    minHeight: {
+        type: Number,
+        default: 400
+    }
 });
 const emit = defineEmits(['update:image', 'confirm', 'cancel']);
 
@@ -63,6 +67,7 @@ function resetUploader() {
 
 <style scoped>
 .image-uploader {
+    margin:1rem 0;
     position: relative;
 
     .post-img-label {
